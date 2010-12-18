@@ -1,0 +1,132 @@
+@CHARSET "UTF-8";
+
+body, html {
+	background-color: #4e1300;
+	margin: 0;
+	padding: 0;
+	
+	font-family: sans-serif;
+}
+
+.list, .eventDetails {
+	background-color: white;
+	border-radius: 10px;
+	
+	-webkit-box-shadow: 0 0 15px black;
+	box-shadow: 0 0 15px black;
+}
+
+.eventDetails, .listItem, .subseqListItem {
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.listItem, .subseqListItem {
+	display: block;
+	text-decoration: none;
+	color: black;
+}
+
+.listItem:ACTIVE, .subseqListItem:ACTIVE {
+	background-color: #777777;
+}
+
+.subseqListItem {
+	border-top: 1px solid #AAAAAA;
+}
+
+.eventTitle {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.eventTime, .participantDetails, .participantMailto, .organizerMailto {
+	color: #888888;
+	font-size: small;
+	
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.listDate, .participantMaxCount {
+	color: white;
+	opacity: 0.5;
+	font-size: small;
+	padding: 2px;
+	padding-top: 4px;
+}
+
+.header {
+	padding: 3px;
+	background-color: black;
+	-webkit-box-shadow: 0 0 15px black;
+
+	color: white;
+	font-weight: bold;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.headerLogo {
+	vertical-align: middle;
+	height: 32px;
+	width: 32px;
+}
+
+.quitButton {
+	vertical-align: middle;
+	position: absolute;
+	
+	top: 2px;
+	right: 2px;
+}
+
+.eventDetailsTitle {
+	font-weight: bold;
+}
+
+.eventDetailsDesc {
+	margin-top: 20px;
+	text-align: justify;
+	color: #444444;
+}
+
+.participantName {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+#controlBar {
+	margin-top: 20px;
+}
+
+button {
+	font-size: large;
+}
+
+#loginForm {
+	padding: 20px;
+	color: white;
+}
+
+#loginHeader {
+	font-size: x-large;
+	margin-bottom: 20px;
+}
+
+.inputLabel {
+	margin-top: 10px;
+	font-style: italic;
+	opacity: 0.8;
+}
+
+#loginSubmit {
+	display: block;
+	margin-top: 20px;
+}
