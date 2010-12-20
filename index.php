@@ -28,9 +28,9 @@ function openEvent(eventId) {
 <body>
 
 <div class="header">
-<a href="list.php"><img class="headerLogo" alt="iAgenda" src="images/calendar.png"></a>
+<a href="."><img class="headerLogo" alt="iAgenda" src="images/calendar.png"></a>
 Nicolas Leclerc
-<a href="#"><img class="quitButton" alt="Quit" src="images/close-gray.png"></a>
+<a href="logout.php"><img class="quitButton" alt="Quit" src="images/close-gray.png"></a>
 </div>
 
 <div class="listDate">Aujourd'hui, 16/12/2010</div>

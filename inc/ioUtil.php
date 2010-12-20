@@ -5,16 +5,35 @@ $AGENDA_URL = "$MAIN_URL?action=iAgenda_iagenda";
 $DISCONNECT_URL = "$MAIN_URL?action=deconnection";
 $LOGIN_URL = "$MAIN_URL?action=connection";
 
+function parseLinks($source) {
+	$result = $source;
+	$result = preg_replace('/https?:\/\/\S+/', '<a href="$0">$0</a>', $result);
+	$result = preg_replace('/ftp:\/\/\S+/', '<a href="$0">$0</a>', $result);
+	$result = preg_replace('/mailto:\S+/', '<a href="$0">$0</a>', $result);
+	
+	return $result;
+}
+
+function getSessionCookieFilePath($sessionId) {
+	// use an ugly hack to retrieve system tmp folder...
+	$tmpfile = tempnam("____dummy","");
+	$tmpDir = dirname($tmpfile);
+	unlink($tmpfile);
+	
+	return "$tmpDir/iagenda.$sessionId.tmp";
+}
+
 function readFileContent($fileUrl) {
-	$file = fopen($fileUrl, "r");
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $fileUrl); 
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	
-	if (!$file)
-		throw new Exception("Unable to open file: $fileUrl");
+	$cookieFile = getSessionCookieFilePath(session_id());
 	
-	$content = "";
+	curl_setopt($ch, CURLOPT_COOKIEJAR, $cookieFile);
+	curl_setopt($ch, CURLOPT_COOKIEFILE, $cookieFile);
 	
-	while($line = fread($file, 1024))
-		$content .= $line;
+	$content = curl_exec($ch);
 	
 	return utf8_encode($content);
 }
@@ -26,6 +45,12 @@ function getErrorMessage($pageContent) {
 		return $matches[1];
 	
 	return null;
+}
+
+function logout() {
+	global $DISCONNECT_URL;
+	readFileContent($DISCONNECT_URL);
+	unlink(getSessionCookieFilePath(session_id()));
 }
 
 function login($login, $pwd) {

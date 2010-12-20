@@ -3,12 +3,16 @@
 header("content-type:text/plain");
 include_once 'inc/ioUtil.php';
 
+session_start();
+
 ?>
 
 * <?= isLoggedIn() ?>
 
-* <?= login("","") ?>
+* <?php try {echo login("nicoponk","");} catch (Exception $e) {echo $e->getMessage();} ?>
 
 * <?= isLoggedIn() ?>
+
+* <?= session_id() ?>
 
 -EOF

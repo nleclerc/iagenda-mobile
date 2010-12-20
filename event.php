@@ -24,9 +24,9 @@ if (!isLoggedIn())
 <body>
 
 <div class="header">
-<a href="list.php"><img class="headerLogo" alt="iAgenda" src="images/calendar.png"></a>
-Nicolas Leclerc Nicolas Leclerc Nicolas Leclerc Nicolas Leclerc
-<a href="#"><img class="quitButton" alt="Quit" src="images/close-gray.png"></a>
+<a href="."><img class="headerLogo" alt="iAgenda" src="images/calendar.png"></a>
+Nicolas Leclerc
+<a href="logout.php"><img class="quitButton" alt="Quit" src="images/close-gray.png"></a>
 </div>
 
 <div class="eventDetails">
