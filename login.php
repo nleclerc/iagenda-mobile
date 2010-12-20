@@ -30,6 +30,7 @@ if ($receivedLogin) {
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
+<link rel="shortcut icon" href="images/favicon.png">
 <link rel="stylesheet" href="css/main.css" type="text/css" />
 
 </head>
