@@ -118,6 +118,7 @@ button {
 #loginHeader {
 	font-size: x-large;
 	margin-bottom: 20px;
+	text-shadow: #000000 3px 3px 4px;
 }
 
 .inputLabel {
@@ -129,4 +130,12 @@ button {
 #loginSubmit {
 	display: block;
 	margin-top: 20px;
+}
+
+.errorMessage {
+	background-color: red;
+	color: white;
+	font-weight: bold;
+	
+	padding: 4px;
 }

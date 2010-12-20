@@ -1,4 +1,9 @@
 <?php
+include_once 'inc/ioUtil.php';
+session_start();
+
+if (!isLoggedIn())
+	header('Location: login.php');
 
 
 
