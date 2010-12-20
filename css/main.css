@@ -76,11 +76,13 @@ body, html {
 	vertical-align: middle;
 	height: 32px;
 	width: 32px;
+	border: none;
 }
 
 .quitButton {
 	vertical-align: middle;
 	position: absolute;
+	border: none;
 	
 	top: 2px;
 	right: 2px;

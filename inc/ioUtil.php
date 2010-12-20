@@ -14,6 +14,14 @@ function parseLinks($source) {
 	return $result;
 }
 
+function getUserNameFromContent($content) {
+	$matches = array();
+	if (preg_match("%>Bonjour&nbsp;(.*?)</div>%", $content, $matches))
+		return $matches[1];
+	
+	throw new Exception("Username not found.");
+}
+
 function getSessionCookieFilePath($sessionId) {
 	// use an ugly hack to retrieve system tmp folder...
 	$tmpfile = tempnam("____dummy","");
@@ -34,6 +42,7 @@ function readFileContent($fileUrl) {
 	curl_setopt($ch, CURLOPT_COOKIEFILE, $cookieFile);
 	
 	$content = curl_exec($ch);
+	$content = preg_replace('/\s+/', ' ', $content); // Normalize spaces for regex convenience.
 	
 	return utf8_encode($content);
 }
@@ -73,6 +82,11 @@ function isLoggedIn($indexContent=null) {
 		$indexContent = readFileContent($MAIN_URL);
 	
 	return preg_match("%".preg_quote($DISCONNECT_URL)."%", $indexContent);
+}
+
+function getAgendaPage($month, $year) {
+	global $AGENDA_URL;
+	return readFileContent("$AGENDA_URL&mois=$month&annee=$year");
 }
 
 ?>

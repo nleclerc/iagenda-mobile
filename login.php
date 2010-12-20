@@ -13,6 +13,7 @@ if ($receivedLogin) {
 	try {
 		login($receivedLogin, $receivedPassword);
 		header('Location: .'); // redirect to index
+		exit;
 	} catch (Exception $e) {
 		$errorMessage = $e->getMessage();
 	}

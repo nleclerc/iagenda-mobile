@@ -1,9 +1,29 @@
 <?php
 include_once 'inc/ioUtil.php';
+include_once 'inc/eventUtil.php';
 session_start();
 
-if (!isLoggedIn())
+if (!isLoggedIn()) {
 	header('Location: login.php');
+	exit;
+}
+
+$currentDate = getdate();
+$nextMonthDate = getNextMonth($currentDate);
+
+$currentDateStr = date(DATEFORMAT);
+
+$thisMonthAgendaContent = getAgendaPage(12, 2010);
+$username = getUserNameFromContent($thisMonthAgendaContent);
+
+$events = parseEventist($thisMonthAgendaContent);
+
+// remove past events
+foreach ($events as $evt)
+	if ($evt->getDay() < $currentDate['mday'])
+		array_shift($events);
+
+$events = array_merge($events, parseEventist(getAgendaPage($nextMonthDate['mon'], $nextMonthDate['year'])));
 
 ?>
 <!DOCTYPE html>
@@ -29,92 +49,49 @@ function openEvent(eventId) {
 
 <div class="header">
 <a href="."><img class="headerLogo" alt="iAgenda" src="images/calendar.png"></a>
-Nicolas Leclerc
+<?= $username ?>
 <a href="logout.php"><img class="quitButton" alt="Quit" src="images/close-gray.png"></a>
 </div>
 
-<div class="listDate">Aujourd'hui, 16/12/2010</div>
-<div class="list">
-	<div class="listItem" onclick="openEvent('toto')">
-		<div class="eventTitle">Repas noel</div>
-		<div class="eventTime">12:00 - 14:00</div>
-	</div>
-	<div class="subseqListItem">
-		<div class="eventTitle">Repas noel Repas noel Repas noel Repas noel Repas noel Repas noel Repas noel</div>
-		<div class="eventTime">12:00 - 14:00</div>
-	</div>
-	<div class="subseqListItem">
-		<div class="eventTitle">Repas noel Repas noel Repas noel Repas noel Repas noel Repas noel Repas noel</div>
-		<div class="eventTime">12:00 - 14:00</div>
-	</div>
-	<div class="subseqListItem">
-		<div class="eventTitle">Repas noel Repas noel Repas noel Repas noel Repas noel Repas noel Repas noel</div>
-		<div class="eventTime">12:00 - 14:00</div>
-	</div>
-	<div class="subseqListItem">
-		<div class="eventTitle">Repas noel Repas noel Repas noel Repas noel Repas noel Repas noel Repas noel</div>
-		<div class="eventTime">12:00 - 14:00</div>
-	</div>
-</div>
+<?php 
 
-<div class="listDate">17/12/2010</div>
-<div class="list">
-	<div class="listItem">
-		<div class="eventTitle">Repas noel</div>
-		<div class="eventTime">12:00 - 14:00</div>
-	</div>
-	<div class="listItem">
-		<div class="eventTitle">Repas noel</div>
-		<div class="eventTime">12:00 - 14:00</div>
-	</div>
-</div>
+$currentCalendarDate = null;
 
-<div class="listDate">17/12/2010</div>
-<div class="list">
-	<div class="listItem">
-		<div class="eventTitle">Repas noel</div>
-		<div class="eventTime">12:00 - 14:00</div>
+foreach ($events as $evt) {
+	$eventDate = $evt->getDate();
+	$first = false;
+	
+	if ($currentCalendarDate != $eventDate) {
+		if ($currentCalendarDate)
+			echo "</div>\n\n";
+		
+		$first = true;
+		$currentCalendarDate = $eventDate;
+		$prefix = "";
+		
+		if ($currentDateStr == $currentCalendarDate)
+			$prefix = "Aujourd'hui, ";
+		
+		echo "<div class=\"listDate\">$prefix$currentCalendarDate</div>\n";
+		echo "<div class=\"list\">\n";
+	}
+	
+	$eventId = $evt->getId();
+	$eventTitle = $evt->getTitle();
+	
+	$eventStyle = "subseqListItem";
+	 
+	if ($first)
+		$eventStyle = "listItem";
+	
+	echo <<<EOD
+	<div class="$eventStyle" onclick="openEvent('$eventId')">
+		<div class="eventTitle">$eventTitle</div>
+		<div class="eventTime">$evt</div>
 	</div>
-	<div class="listItem">
-		<div class="eventTitle">Repas noel</div>
-		<div class="eventTime">12:00 - 14:00</div>
-	</div>
-</div>
+EOD;
+}
+?>
 
-<div class="listDate">17/12/2010</div>
-<div class="list">
-	<div class="listItem">
-		<div class="eventTitle">Repas noel</div>
-		<div class="eventTime">12:00 - 14:00</div>
-	</div>
-	<div class="listItem">
-		<div class="eventTitle">Repas noel</div>
-		<div class="eventTime">12:00 - 14:00</div>
-	</div>
-</div>
-
-<div class="listDate">17/12/2010</div>
-<div class="list">
-	<div class="listItem">
-		<div class="eventTitle">Repas noel</div>
-		<div class="eventTime">12:00 - 14:00</div>
-	</div>
-	<div class="listItem">
-		<div class="eventTitle">Repas noel</div>
-		<div class="eventTime">12:00 - 14:00</div>
-	</div>
-</div>
-
-<div class="listDate">17/12/2010</div>
-<div class="list">
-	<div class="listItem">
-		<div class="eventTitle">Repas noel</div>
-		<div class="eventTime">12:00 - 14:00</div>
-	</div>
-	<div class="listItem">
-		<div class="eventTitle">Repas noel</div>
-		<div class="eventTime">12:00 - 14:00</div>
-	</div>
-</div>
 </body>
 </html>
