@@ -66,6 +66,7 @@ body, html {
 	padding: 3px;
 	background-color: black;
 	-webkit-box-shadow: 0 0 15px black;
+	-moz-box-shadow: 0 0 15px black;
 
 	color: white;
 	font-weight: bold;
