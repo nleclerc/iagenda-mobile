@@ -53,6 +53,8 @@ else {
 
 <link rel="shortcut icon" href="images/favicon.png">
 <link rel="stylesheet" href="css/main.css" type="text/css" />
+
+<script type="text/javascript" src="/ga.js"></script>
 </head>
 
 <body>

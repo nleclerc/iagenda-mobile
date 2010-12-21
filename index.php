@@ -47,6 +47,7 @@ function openEvent(eventId) {
 }
 </script>
 
+<script type="text/javascript" src="/ga.js"></script>
 </head>
 <body>
 
