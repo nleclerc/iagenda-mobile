@@ -2,14 +2,25 @@
 
 $MAIN_URL = "http://www.mensa-idf.org/index.php";
 $AGENDA_URL = "$MAIN_URL?action=iAgenda_iagenda";
+$EVENT_URL = "$MAIN_URL?action=iAgenda_iactivite";
 $DISCONNECT_URL = "$MAIN_URL?action=deconnection";
 $LOGIN_URL = "$MAIN_URL?action=connection";
+
+$SET_PARTICIPATION_URL = "$MAIN_URL?action=iAgenda_iactivite";
+$REMOVE_PARTICIPATION_URL = "$MAIN_URL?action=iAgenda_iactivite&d=1";
+
 
 function parseLinks($source) {
 	$result = $source;
 	$result = preg_replace('/https?:\/\/\S+/', '<a href="$0">$0</a>', $result);
 	$result = preg_replace('/ftp:\/\/\S+/', '<a href="$0">$0</a>', $result);
 	$result = preg_replace('/mailto:\S+/', '<a href="$0">$0</a>', $result);
+	$result = preg_replace('/[A-Za-z0-9\.\+]+@[A-Za-z0-9\.]+\.[A-Za-z]+/', '<a href="mailto:$0">$0</a>', $result);
+	$result = preg_replace('/www.\S+/', '<a href="http://$0">$0</a>', $result);
+	
+	$result = preg_replace('/(\d\d) (\d\d) (\d\d) (\d\d) (\d\d)/', '<a href="tel:$1$2$3$4$5">$0</a>', $result);
+	$result = preg_replace('/(\d\d)\.(\d\d)\.(\d\d)\.(\d\d)\.(\d\d)/', '<a href="tel:$1$2$3$4$5">$0</a>', $result);
+	$result = preg_replace('/(\d\d)-(\d\d)-(\d\d)-(\d\d)-(\d\d)/', '<a href="tel:$1$2$3$4$5">$0</a>', $result);
 	
 	return $result;
 }
@@ -87,6 +98,21 @@ function isLoggedIn($indexContent=null) {
 function getAgendaPage($month, $year) {
 	global $AGENDA_URL;
 	return readFileContent("$AGENDA_URL&mois=$month&annee=$year");
+}
+
+function getEventDetailPage($eventId) {
+	global $EVENT_URL;
+	return readFileContent("$EVENT_URL&id=$eventId");
+}
+
+function setEventParticipation($eventId, $userId) {
+	global $SET_PARTICIPATION_URL;
+	return readFileContent("$SET_PARTICIPATION_URL&id=$eventId&membre=$userId");
+}
+
+function removeEventParticipation($eventId, $userId) {
+	global $REMOVE_PARTICIPATION_URL;
+	return readFileContent("$REMOVE_PARTICIPATION_URL&id=$eventId&membre=$userId");
 }
 
 ?>

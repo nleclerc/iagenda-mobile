@@ -36,12 +36,14 @@ $events = array_merge($events, parseEventist(getAgendaPage($nextMonthDate['mon']
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
+<title>iAgenda Mobile</title>
+
 <link rel="shortcut icon" href="images/favicon.png">
 <link rel="stylesheet" href="css/main.css" type="text/css" />
 
 <script type="text/javascript">
 function openEvent(eventId) {
-	window.location.href = "event.php?id="+eventId;
+	window.location.href = "event.php?eventId="+eventId;
 }
 </script>
 

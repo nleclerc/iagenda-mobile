@@ -1,5 +1,6 @@
 <?php
 include_once 'inc/ioUtil.php';
+include_once 'inc/eventUtil.php';
 session_start();
 
 if (!isLoggedIn()) {
@@ -7,7 +8,36 @@ if (!isLoggedIn()) {
 	exit;
 }
 
+$errorMessage = '';
+$username = '';
 
+if (!isset($_GET['eventId']))
+	$errorMessage = "Identifiant d'événement manquant.";
+else {
+	$eventId = $_GET['eventId'];
+	$eventDetailsContent = getEventDetailPage($eventId);
+	$userId = getUserIdFromContent($eventDetailsContent);
+	
+	if (isset($_GET['action'])) {
+		$action = $_GET['action'];
+		
+		echo "<pre>$action</pre>";
+		
+		if ($action == 'insc')
+			setEventParticipation($eventId, $userId);
+		else
+			removeEventParticipation($eventId, $userId);
+		
+		$currentUri = $_SERVER["SCRIPT_NAME"];
+		
+		header("Location: $currentUri?eventId=$eventId");
+		exit;
+	}
+	
+	$username = getUserNameFromContent($eventDetailsContent);
+	$eventDetails = new EventDetails($eventId, $eventDetailsContent);
+	$isParticipating = $eventDetails->isParticipating($userId);
+}
 ?>
 <!DOCTYPE html>
 
@@ -19,61 +49,82 @@ if (!isLoggedIn()) {
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
+<title>iAgenda Mobile</title>
+
 <link rel="shortcut icon" href="images/favicon.png">
 <link rel="stylesheet" href="css/main.css" type="text/css" />
-
 </head>
+
 <body>
 
 <div class="header">
 <a href="."><img class="headerLogo" alt="iAgenda" src="images/calendar.png"></a>
-Nicolas Leclerc
+<?= $username ?>
 <a href="logout.php"><img class="quitButton" alt="Quit" src="images/close-gray.png"></a>
 </div>
 
-<div class="eventDetails">
-	<div class="eventDetailsTitle">Soirée "Funky Town"</div>
-	<div class="eventTime">Aujourd'hui, 16/12/2010 - <a class="organizerMailto" href="mailto:albert@telechat.fr?subject=Soirée &quot;Funky Town&quot;">Albert Le Dictionnaire</a></div>
-	
-	<div class="eventDetailsDesc">Bonjour,<br>
-<br>
-Une soirée à "orientation dansante" vous est proposée à partir de 21h dans un bar/pub pour celles et ceux qui veulent se réunir autour d'un verre et/ou se "déchirer" sur la piste de danse.<br>
-<br>
-Il s'agit du bar/pub "Le merle moqueur" (11, rue de la Butte aux Cailles, 75013 Paris), un bar à cocktail / rhumerie dont l'ambiance est festive et la musique variée.<br>
-<br>
-Ce genre de soirées pourra être proposé à nouveau, soit dans le même cadre, soit dans des cadres différents.</div>
+<?php
+	$detailsStyle = 'eventDetails';
+	if ($isParticipating)
+		$detailsStyle = 'eventDetailsParticipating';
+?>
+<div class="<?=$detailsStyle?>">
+<?php if ($errorMessage != '') echo "<div class=\"errorMessage\">$errorMessage</div>" ?>
 
+<div class="eventDetailsTitle"><?= $eventDetails->getTitle() ?></div>
+<div class="eventTime"><?= $eventDetails->getDate() ?> - <a class="organizerMailto" href="mailto:<?= $eventDetails->getAuthorEmail() ?>?subject=<?= $eventDetails->getTitle() ?>"><?= $eventDetails->getAuthor() ?></a></div>
+
+<div class="eventDetailsDesc"><?= parseLinks($eventDetails->getDescription()) ?></div>
 <div>
+
 <div id="controlBar">
-<button type="button" id="subscribeButton" disabled="disabled">S'inscrire</button>
-<button type="button" id="unsubscribeButton">Se désinscrire</button>
+<button type="button" id="subscribeButton"
+<?php if ($isParticipating) echo 'disabled="true" '?>
+onclick="window.location.href = window.location.href+'&amp;action=insc'">S'inscrire</button>
+
+<button type="button" id="unsubscribeButton"
+<?php if (!$isParticipating) echo 'disabled="true" '?>
+onclick="window.location.href = window.location.href+'&amp;action=desinsc'">Se désinscrire</button>
 </div>
+
 </div>
 </div>
 
-<div class="participantMaxCount">Participants: 5 / illimité</div>
+<div class="participantMaxCount">Participants: <?= $eventDetails->getParticipantCount() ?> / <?= $eventDetails->getMaxParticipantCount() ?></div>
 
 <div class="list">
-<div class="listItem">
-	<div class="participantName">Lola L'AUTRUCHE</div>
-	<div class="participantDetails">3575 - <a class="participantMailto" href="mailto:lola@telechat.fr">lola@telechat.fr</a></div>
-</div>
-<div class="subseqListItem">
-	<div class="participantName">Nicolas LECLERC</div>
-	<div class="participantDetails">4521 - nl@spirotron.fr</div>
-</div>
-<div class="subseqListItem">
-	<div class="participantName">Gluon DU-TROU</div>
-	<div class="participantDetails">4565 - gluondutrou@telechat.fr</div>
-</div>
-<div class="subseqListItem">
-	<div class="participantName">Pub PUB</div>
-	<div class="participantDetails">6532 - pubpub@telechat.fr</div>
-</div>
-<div class="subseqListItem">
-	<div class="participantName">Legu MAN</div>
-	<div class="participantDetails">8543 - leguman@telechat.fr</div>
-</div>
+<?php 
+	$firstP = true;
+	
+	foreach ($eventDetails->getParticipants() as $participant) {
+		$pId = $participant->getId();
+		$pName = $participant->getName();
+		$pEmail = $participant->getEmail();
+		
+		$isSelf = $pId == $userId;
+		
+		$itemStyle = 'subseqListItem';
+		
+		if ($isSelf)
+			$itemStyle = 'subseqHighlightedListItem';
+		
+		if ($firstP) {
+			$firstP = false;
+			
+			if ($isSelf)
+				$itemStyle = 'highlightedListItem';
+			else
+				$itemStyle = 'listItem';
+		}
+		
+		echo <<<EOD
+	<div class="$itemStyle">
+		<div class="participantName">$pName</div>
+		<div class="participantDetails">$pId - <a class="participantMailto" href="mailto:$pEmail">$pEmail</a></div>
+	</div>
+EOD;
+	}
+?>
 </div>
 
 </body>

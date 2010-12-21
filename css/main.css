@@ -8,7 +8,7 @@ body, html {
 	font-family: sans-serif;
 }
 
-.list, .eventDetails {
+.list, .eventDetails, .eventDetailsParticipating {
 	background-color: white;
 	border-radius: 10px;
 	-moz-border-radius: 10px;
@@ -18,24 +18,24 @@ body, html {
 	box-shadow: 0 0 15px black;
 }
 
-.eventDetails, .listItem, .subseqListItem {
+.eventDetailsParticipating, .highlightedListItem, .subseqHighlightedListItem {
+	background-color: #ffe9c7;
+}
+
+.eventDetails, .listItem, .eventDetailsParticipating, .subseqListItem, .highlightedListItem, .subseqHighlightedListItem {
 	padding-left: 5px;
 	padding-right: 5px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
 
-.listItem, .subseqListItem {
+.listItem, .subseqListItem, .highlightedListItem, .subseqHighlightedListItem {
 	display: block;
 	text-decoration: none;
 	color: black;
 }
 
-.listItem:ACTIVE, .subseqListItem:ACTIVE {
-	background-color: #777777;
-}
-
-.subseqListItem {
+.subseqListItem, .subseqHighlightedListItem {
 	border-top: 1px solid #AAAAAA;
 }
 
@@ -93,12 +93,20 @@ body, html {
 
 .eventDetailsTitle {
 	font-weight: bold;
+	font-size: large;
 }
 
 .eventDetailsDesc {
 	margin-top: 20px;
-	text-align: justify;
 	color: #444444;
+}
+
+.eventDetailsDesc a {
+	color: #a12700;
+}
+
+.eventDetailsDesc a:visited {
+	color: #4e1300;
 }
 
 .participantName {
