@@ -28,7 +28,7 @@ sur : http://www.gnu.org/licenses/gpl-3.0-standalone.html
 3. Déploiement
 --------------
 
-Le site nécéssite la lib PHP cURL pour fonctionner. Veuillez donc penser à l'installer sur votre serveur.
+Le site nécessite la lib PHP cURL pour fonctionner. Veuillez donc penser à l'installer sur votre serveur.
 
 
 4. Contact
