@@ -35,6 +35,11 @@ body, html {
 	color: black;
 }
 
+.highlightedListItem {
+	border-radius: 10px 10px 0 0;
+	-moz-border-radius: 10px 10px 0 0;
+}
+
 .subseqListItem, .subseqHighlightedListItem {
 	border-top: 1px solid #AAAAAA;
 }
