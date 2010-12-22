@@ -61,7 +61,7 @@ function readFileContent($fileUrl) {
 function getErrorMessage($pageContent) {
 	$matches = array();
 	
-	if (preg_match('%<center.*>(.*?)<\/span><\/center>%', $pageContent, $matches))
+	if (preg_match('%<center.*?<span.*?>(.*?)<\/span><\/center>%', $pageContent, $matches))
 		return $matches[1];
 	
 	return null;
