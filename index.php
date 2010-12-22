@@ -44,11 +44,13 @@ $events = array_merge($events, parseEventist(getAgendaPage($nextMonthDate['mon']
 <script type="text/javascript" src="scripts/jquery-1.4.4.min.js"></script>
 
 <script type="text/javascript">
+/*
 $.ajaxSetup({"error":function(XMLHttpRequest,textStatus, errorThrown) {   
     alert(textStatus);
     alert(errorThrown);
     alert(XMLHttpRequest.responseText);
 }});
+*/
 
 function openEvent(eventId) {
 	window.location.href = "event.php?eventId="+eventId;
