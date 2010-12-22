@@ -242,4 +242,8 @@ function insertHighlights($source) {
 	return $result;
 }
 
+function escapeQuotes($source) {
+	return preg_replace('/"/', '\\"', $source);
+}
+
 ?>

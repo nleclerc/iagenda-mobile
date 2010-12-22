@@ -41,9 +41,33 @@ $events = array_merge($events, parseEventist(getAgendaPage($nextMonthDate['mon']
 <link rel="shortcut icon" href="images/favicon.png">
 <link rel="stylesheet" href="css/main.css" type="text/css" />
 
+<script type="text/javascript" src="scripts/jquery-1.4.4.min.js"></script>
+
 <script type="text/javascript">
+$.ajaxSetup({"error":function(XMLHttpRequest,textStatus, errorThrown) {   
+    alert(textStatus);
+    alert(errorThrown);
+    alert(XMLHttpRequest.responseText);
+}});
+
 function openEvent(eventId) {
 	window.location.href = "event.php?eventId="+eventId;
+}
+
+function loadEventData(eventId) {
+	$.getJSON("eventData.php", {"eventId":eventId}, handleData);
+}
+
+function handleData (data) {
+	var details = "";
+	details += data.participantCount+" / "+data.maxParticipants;
+	details += " - ";
+	details += data.author;
+	
+	$("#evtDetails-"+data.id).html(details);
+
+	if (data.isParticipating)
+		$("#evtTitle-"+data.id).addClass("eventTitleParticipating");
 }
 </script>
 
@@ -89,10 +113,11 @@ foreach ($events as $evt) {
 		$eventStyle = "listItem";
 	
 	echo <<<EOD
-	<div class="$eventStyle" onclick="openEvent('$eventId')">
-		<div class="eventTitle">$eventTitle</div>
-		<div class="eventTime">$evt</div>
+	<div class="$eventStyle" onclick="openEvent('$eventId')" on>
+		<div class="eventTitle" id="evtTitle-$eventId">$eventTitle</div>
+		<div class="eventSummary" id="evtDetails-$eventId">...</div>
 	</div>
+	<script type="text/javascript">loadEventData($eventId)</script>
 EOD;
 }
 ?>

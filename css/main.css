@@ -44,13 +44,17 @@ body, html {
 	border-top: 1px solid #AAAAAA;
 }
 
-.eventTitle {
+.eventTitle, .eventTitleParticipating {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
 }
 
-.eventTime, .participantDetails, .participantMailto, .organizerMailto {
+.eventTitleParticipating {
+	color: #a12700;
+}
+
+.eventSummary, .participantDetails, .participantMailto, .organizerMailto {
 	color: #888888;
 	font-size: small;
 	

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>JSON read test</title>
+
+<script type="text/javascript" src="../scripts/jquery-1.4.4.min.js"></script>
+<script type="text/javascript">
+$(window).load(init);
+
+function init() {
+	$('#result').html("toto");
+	$.getJSON("json.txt", null, handleData);
+}
+
+function handleData(data, textStatus, xhr) {
+	$('#result').html(data.id);
+}
+</script>
+</head>
+<body>
+
+<div id="result">tata</div>
+
+</body>
+</html>
