@@ -43,7 +43,7 @@ else {
 
 <html>
 <head>
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 <meta name='HandheldFriendly' content='True' />
 <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -76,7 +76,7 @@ else {
 <div class="eventDetailsTitle"><?= $eventDetails->getTitle() ?></div>
 <div class="eventTime"><?= $eventDetails->getDate() ?> - <a class="organizerMailto" href="mailto:<?= $eventDetails->getAuthorEmail() ?>?subject=<?= $eventDetails->getTitle() ?>"><?= $eventDetails->getAuthor() ?></a></div>
 
-<div class="eventDetailsDesc"><?= parseLinks($eventDetails->getDescription()) ?></div>
+<div class="eventDetailsDesc"><?= parseLinks(insertHighlights($eventDetails->getDescription())) ?></div>
 <div>
 
 <div id="controlBar">

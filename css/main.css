@@ -152,3 +152,8 @@ button {
 	
 	padding: 4px;
 }
+
+.hour {
+	font-weight: bold;
+	color: black;
+}
