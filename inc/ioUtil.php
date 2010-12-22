@@ -55,6 +55,8 @@ function readFileContent($fileUrl) {
 	$content = curl_exec($ch);
 	$content = preg_replace('/\s+/', ' ', $content); // Normalize spaces for regex convenience.
 	
+	// TODO: fix some chars encoding (like euro sign or 'oe').
+	
 	return utf8_encode($content);
 }
 
