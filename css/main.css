@@ -54,7 +54,7 @@ body, html {
 	color: #a12700;
 }
 
-.eventSummary, .participantDetails, .participantMailto, .organizerMailto {
+.eventSummary, .eventTime, .participantDetails, .participantMailto, .organizerMailto {
 	color: #888888;
 	font-size: small;
 	
