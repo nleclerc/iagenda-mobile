@@ -52,24 +52,39 @@ $.ajaxSetup({"error":function(XMLHttpRequest,textStatus, errorThrown) {
 }});
 */
 
+var queue = new Array();
+$(processQueue); // add document load handler
+
+function enqueueEvent(eventId){
+	queue.push(eventId);
+}
+
+function processQueue(){
+	if (queue.length == 0)
+		return;
+
+	loadEventData(queue.shift(), processQueue);
+}
+
 function openEvent(eventId) {
 	window.location.href = "event.php?eventId="+eventId;
 }
 
-function loadEventData(eventId) {
-	$.getJSON("eventData.php", {"eventId":eventId}, handleData);
-}
+function loadEventData(eventId, callback) {
+	$.getJSON("eventData.php", {"eventId":eventId}, function(data){
+		var details = "";
+		details += data.participantCount+" / "+data.maxParticipants;
+		details += " - ";
+		details += data.author;
+		
+		$("#evtDetails-"+data.id).html(details);
 
-function handleData (data) {
-	var details = "";
-	details += data.participantCount+" / "+data.maxParticipants;
-	details += " - ";
-	details += data.author;
-	
-	$("#evtDetails-"+data.id).html(details);
+		if (data.isParticipating)
+			$("#evtTitle-"+data.id).addClass("eventTitleParticipating");
 
-	if (data.isParticipating)
-		$("#evtTitle-"+data.id).addClass("eventTitleParticipating");
+		if (callback)
+			callback();
+	});
 }
 </script>
 
@@ -119,7 +134,7 @@ foreach ($events as $evt) {
 		<div class="eventTitle" id="evtTitle-$eventId">$eventTitle</div>
 		<div class="eventSummary" id="evtDetails-$eventId">...</div>
 	</div>
-	<script type="text/javascript">loadEventData($eventId)</script>
+	<script type="text/javascript">enqueueEvent($eventId)</script>
 EOD;
 }
 ?>
