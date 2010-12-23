@@ -27,7 +27,7 @@ function parseLinks($source) {
 
 function getUserNameFromContent($content) {
 	$matches = array();
-	if (preg_match("%>Bonjour&nbsp;(.*?)</div>%", $content, $matches))
+	if (preg_match("%>Bonjour (.*?)</div>%", $content, $matches))
 		return $matches[1];
 	
 	throw new Exception("Username not found.");
@@ -54,6 +54,7 @@ function readFileContent($fileUrl) {
 	
 	$content = curl_exec($ch);
 	$content = preg_replace('/\s+/', ' ', $content); // Normalize spaces for regex convenience.
+	$content = preg_replace('/&nbsp;/', ' ', $content); // Replace special char with proper char.
 	
 	// TODO: fix some chars encoding (like euro sign or 'oe').
 	
@@ -94,7 +95,10 @@ function isLoggedIn($indexContent=null) {
 	if (!$indexContent)
 		$indexContent = readFileContent($MAIN_URL);
 	
-	return preg_match("%".preg_quote($DISCONNECT_URL)."%", $indexContent);
+	if (preg_match("%".preg_quote($DISCONNECT_URL)."%", $indexContent))
+		return true;
+	
+	return false;
 }
 
 function getAgendaPage($month, $year) {

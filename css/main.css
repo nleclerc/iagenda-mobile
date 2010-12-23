@@ -35,6 +35,10 @@ body, html {
 	color: black;
 }
 
+.highlightedItem {
+	color: #a12700;
+}
+
 .highlightedListItem {
 	border-radius: 10px 10px 0 0;
 	-moz-border-radius: 10px 10px 0 0;
@@ -44,14 +48,10 @@ body, html {
 	border-top: 1px solid #AAAAAA;
 }
 
-.eventTitle, .eventTitleParticipating {
+.eventTitle {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
-}
-
-.eventTitleParticipating {
-	color: #a12700;
 }
 
 .eventSummary, .eventTime, .participantDetails, .participantMailto, .organizerMailto {

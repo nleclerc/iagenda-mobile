@@ -3,18 +3,20 @@
 define('DATEFORMAT', 'd/m/Y');
 
 class EventEntry {
-	private $id;
-	private $title;
-	private $year;
-	private $month;
-	private $day;
+	public $id;
+	public $title;
+	public $year;
+	public $month;
+	public $day;
+	public $date;
 	
 	public function __construct($id, $title, $year, $month, $day) {
 		$this->id = $id;
-		$this->title = $title;
+		$this->title = decodeEntities($title);
 		$this->year = $year;
 		$this->month = $month;
 		$this->day = $day;
+		$this->date = $this->getdate();
 	}
 	
 	public function getId() {
@@ -38,21 +40,25 @@ class EventEntry {
 	}
 	
 	public function getdate() {
-		return $this->formatDigits($this->day)."/".$this->formatDigits($this->month)."/".$this->year;
+		return formatDigits($this->day)."/".formatDigits($this->month)."/".$this->year;
 	}
 	
 	public function __toString() {
 		return $this->id.":".$this->getdate().":".$this->title;
 	}
+}
 	
-	private function formatDigits($nb, $length=2) {
-		$str = "$nb";
-		
-		while (strlen($str) < $length)
-			$str = "0$str";
-		
-		return $str;
-	}
+function formatDigits($nb, $length=2) {
+	$str = "$nb";
+	
+	while (strlen($str) < $length)
+		$str = "0$str";
+	
+	return $str;
+}
+
+function decodeEntities($source) {
+	return html_entity_decode ($source, ENT_QUOTES, "utf-8");
 }
 
 function rmatch($regex, $source) {
@@ -79,13 +85,14 @@ function parseMaxCount($definition) {
 }
 
 class EventDetails {
-	private $id;
-	private $title;
-	private $date;
-	private $author;
-	private $authorEmail;
-	private $description;
-	private $participants;
+	public $id;
+	public $title;
+	public $date;
+	public $author;
+	public $authorEmail;
+	public $description;
+	public $participants;
+	public $maxParticipants;
 	private $maxParticipantCount;
 	
 	public function __construct($id, $definition) {
@@ -93,14 +100,16 @@ class EventDetails {
 		
 		$data = rmatch('%<th.*?>(.*?)</th>.*?Activit&eacute; propos&eacute;e par (.+?)</td>.*?mailto:(.+?)".*?<b>(.*?)</b>.*?<b>(.*?)</b>.*?<td>(.*?)</td>%', $definition);
 		
-		$this->date = $data[0];
+		$this->date = reformatDate($data[0]);
 		
-		$this->author = $data[1];
+		$this->author = decodeEntities($data[1]);
 		$this->authorEmail = $data[2];
 		
-		$this->title = $data[3];
+		$this->title = decodeEntities($data[3]);
 		$this->maxParticipantCount = parseMaxCount($data[4]);
-		$this->description = $data[5];
+		$this->maxParticipants = $this->maxParticipantCount;
+		
+		$this->description = decodeEntities($data[5]);
 		
 		$this->participants = array();
 		
@@ -163,13 +172,13 @@ class EventDetails {
 }
 
 class EventParticipant {
-	private $id;
-	private $name;
-	private $email;
+	public $id;
+	public $name;
+	public $email;
 	
 	public function __construct($id, $name, $email) {
-		$this->id = $id;
-		$this->name = $name;
+		$this->id = intval($id);
+		$this->name = decodeEntities($name);
 		$this->email = $email;
 	}
 	
@@ -184,6 +193,15 @@ class EventParticipant {
 	public function getEmail() {
 		return $this->email;
 	}
+}
+
+function reformatDate($originalDate) {
+	$result = rmatch('%(\d+)/(\d+)/(\d+)%', $originalDate);
+	
+	if ($result)
+		return formatDigits($result[0]).'/'.formatDigits($result[1]).'/'.$result[2];
+	
+	throw new Exception("Invalid date: $originalDate");
 }
 
 function getUserIdFromContent($content) {

@@ -73,14 +73,22 @@ function openEvent(eventId) {
 function loadEventData(eventId, callback) {
 	$.getJSON("eventData.php", {"eventId":eventId}, function(data){
 		var details = "";
-		details += data.participantCount+" / "+data.maxParticipants;
+		details += data.participants.length+" / ";
+		
+		if (data.maxParticipants > 0)
+			details += data.maxParticipants;
+		else if (data.maxParticipants < 0)
+			details += "illimité";
+		else
+			details += "inconnu (ERREUR)";
+		
 		details += " - ";
 		details += data.author;
 		
 		$("#evtDetails-"+data.id).html(details);
 
 		if (data.isParticipating)
-			$("#evtTitle-"+data.id).addClass("eventTitleParticipating");
+			$("#evtTitle-"+data.id).addClass("highlightedItem");
 
 		if (callback)
 			callback();
