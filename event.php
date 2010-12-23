@@ -60,9 +60,9 @@ else {
 <body>
 
 <div class="header">
-<a href="."><img class="headerLogo" alt="iAgenda" src="images/calendar.png"></a>
+<a href="."><img class="headerLogo" alt="Retours" src="images/back.png"></a>
 <?= $username ?>
-<a href="logout.php"><img class="quitButton" alt="Quit" src="images/close-gray.png"></a>
+<a href="logout.php"><img class="quitButton" alt="Quit" src="images/close.png"></a>
 </div>
 
 <?php
