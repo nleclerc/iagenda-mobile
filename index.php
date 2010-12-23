@@ -13,7 +13,7 @@ $nextMonthDate = getNextMonth($currentDate);
 
 $currentDateStr = date(DATEFORMAT);
 
-$thisMonthAgendaContent = getAgendaPage(12, 2010);
+$thisMonthAgendaContent = getAgendaPage($currentDate['mon'], $currentDate['year']);
 $username = getUserNameFromContent($thisMonthAgendaContent);
 
 $events = parseEventist($thisMonthAgendaContent);
