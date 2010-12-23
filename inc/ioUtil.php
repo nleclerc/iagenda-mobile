@@ -16,7 +16,7 @@ function parseLinks($source) {
 	$result = preg_replace('/ftp:\/\/\S+/', '<a href="$0">$0</a>', $result);
 	$result = preg_replace('/mailto:\S+/', '<a href="$0">$0</a>', $result);
 	$result = preg_replace('/[A-Za-z0-9.\+]+@[A-Za-z0-9.]+\.[A-Za-z]+/', '<a href="mailto:$0">$0</a>', $result);
-	$result = preg_replace('/www.\S+/', '<a href="http://$0">$0</a>', $result);
+	$result = preg_replace('/[^:\/](www.\S+)/', '<a href="http://$1">$1</a>', $result);
 	
 	// phone links
 	$result = preg_replace('/(0\d)[.\- ]?(\d\d)[.\- ]?(\d\d)[.\- ]?(\d\d)[.\- ]?(\d\d)/', '<a href="tel:$1$2$3$4$5">$0</a>', $result);
