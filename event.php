@@ -60,7 +60,7 @@ else {
 <body>
 
 <div class="header">
-<a href="."><img class="headerLogo" alt="Retours" src="images/back.png"></a>
+<a href="."><img class="headerLogo" alt="Retour" src="images/back.png"></a>
 <?= $username ?>
 <a href="logout.php"><img class="quitButton" alt="Quit" src="images/close.png"></a>
 </div>
