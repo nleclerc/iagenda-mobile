@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Date manipulation test</title>
+
+<script type="text/javascript" src="../scripts/jquery-1.4.4.min.js"></script>
+
+<script type="text/javascript">
+var currentDate = new Date();
+
+$(refresh);
+
+function refresh(){
+	$('#output').html(currentDate.getDate()+'/'+currentDate.getMonth()+'/'+currentDate.getFullYear());
+}
+
+function addMonth(){
+	currentDate.setMonth(currentDate.getMonth()+1,1);
+	refresh();
+}
+</script>
+</head>
+<body>
+<div id="output">-</div>
+<button onclick="refresh()">Refresh</button>
+<button onclick="addMonth()">Add Month</button>
+</body>
+</html>
