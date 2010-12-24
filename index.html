@@ -35,8 +35,12 @@ function loadNextEvents(){
 }
 
 function handleNewEvents(data){
-	if (!data.loggedIn)
+	if (!data.loggedIn) {
 		window.location.href = "login.php";
+		return;
+	}
+	
+	showBody();
 	
 	if (data.errorMessage)
 		setErrorMessage(data.errorMessage);
@@ -49,6 +53,8 @@ function handleNewEvents(data){
 		for (var i=0; i<data.events.length; i++)
 			if (!isBefore(data.events[i].date, currentDate))
 				addEvent(data.events[i]);
+		
+		showBody();
 		
 		if (loadCount < maxLoads) {
 			if (eventCount < reloadThreshold)
@@ -77,7 +83,7 @@ function addEvent(eventData){
 	if (!first)
 		eventDiv.addClass('subseqListItem');
 	
-	dateBlock.append(eventDiv);
+	eventDiv.hide().appendTo(dateBlock).fadeIn(500);
 	queue.push(eventData.id);
 	eventCount++;
 }
@@ -88,7 +94,7 @@ function createDateBlock(date){
 	blockIndex[date] = dateBlock;
 	
 	events.append('<div class="listDate">'+beautifyDate(date, currentDate)+'</div>\n');
-	events.append(dateBlock);
+	dateBlock.hide().appendTo(events).fadeIn(500);
 	
 	return dateBlock
 }
@@ -133,7 +139,7 @@ function loadEventData(eventId, callback) {
 
 <script type="text/javascript" src="/ga.js"></script>
 </head>
-<body>
+<body class="hidden">
 
 <div class="header">
 <img class="headerLogo" alt="iAgenda" src="images/calendar.png" onclick="jumpTo('.')">

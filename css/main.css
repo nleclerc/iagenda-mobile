@@ -8,6 +8,10 @@ body, html {
 	font-family: sans-serif;
 }
 
+.hidden {
+	display: none;
+}
+
 .list {
 	background-color: white;
 	border-radius: 10px;

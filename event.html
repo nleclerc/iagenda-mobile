@@ -57,6 +57,8 @@ function handleData(data) {
 		var p = data.participants[i];
 		$('#participants').append(getParticipantHtml(p, data.userid==p.id, i>0))
 	}
+	
+	showBody();
 }
 
 function formatDescription(source) {
@@ -108,7 +110,7 @@ function unsubscribe(){
 <script type="text/javascript" src="/ga.js"></script>
 </head>
 
-<body>
+<body class="hidden">
 
 <div class="header">
 <img class="headerLogo" alt="Retour" src="images/back.png" onclick="jumpTo('.')">
