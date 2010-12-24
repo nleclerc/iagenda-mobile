@@ -8,7 +8,7 @@ body, html {
 	font-family: sans-serif;
 }
 
-.list, .eventDetails, .eventDetailsParticipating {
+.list {
 	background-color: white;
 	border-radius: 10px;
 	-moz-border-radius: 10px;
@@ -18,18 +18,18 @@ body, html {
 	box-shadow: 0 0 15px black;
 }
 
-.eventDetailsParticipating, .highlightedListItem, .subseqHighlightedListItem, .participatingEvent {
+.participatingEvent {
 	background-color: #ffe9c7;
 }
 
-.eventDetails, .listItem, .eventDetailsParticipating, .subseqListItem, .highlightedListItem, .subseqHighlightedListItem, #eventDetails {
+.listItem, #eventDetails {
 	padding-left: 5px;
 	padding-right: 5px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
 
-.listItem, .subseqListItem, .highlightedListItem, .subseqHighlightedListItem {
+.listItem {
 	display: block;
 	text-decoration: none;
 	color: black;
@@ -39,12 +39,7 @@ body, html {
 	color: #a12700;
 }
 
-.highlightedListItem {
-	border-radius: 10px 10px 0 0;
-	-moz-border-radius: 10px 10px 0 0;
-}
-
-.subseqListItem, .subseqHighlightedListItem {
+.subseqListItem {
 	border-top: 1px solid #AAAAAA;
 }
 
@@ -54,7 +49,7 @@ body, html {
 	white-space: nowrap;
 }
 
-.eventSummary, .eventTime, .participantDetails, .participantMailto, .organizerMailto, #organizerMailto {
+.eventSummary, .participantDetails, .participantMailto, #organizerMailto {
 	color: #888888;
 	font-size: small;
 	
@@ -115,21 +110,21 @@ body, html {
 	right: 2px;
 }
 
-.eventDetailsTitle, #eventDetailsTitle {
+#eventDetailsTitle {
 	font-weight: bold;
 	font-size: large;
 }
 
-.eventDetailsDesc, #eventDetailsDesc {
+#eventDetailsDesc {
 	margin-top: 20px;
 	color: #444444;
 }
 
-.eventDetailsDesc a, #eventDetailsDesc a {
+#eventDetailsDesc a {
 	color: #a12700;
 }
 
-.eventDetailsDesc a:visited, #eventDetailsDesc a:visited {
+#eventDetailsDesc a:visited {
 	color: #4e1300;
 }
 
@@ -178,7 +173,7 @@ button {
 	margin: 5px;
 }
 
-.hour, #eventDetailsDesc .highlight {
+#eventDetailsDesc .highlight {
 	font-weight: bold;
 	color: black;
 }
