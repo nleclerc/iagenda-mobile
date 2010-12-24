@@ -71,6 +71,7 @@ function openEvent(eventId) {
 }
 
 function loadEventData(eventId, callback) {
+	$("#evtDetails-"+eventId).html('<img src="images/loading.gif">');
 	$.getJSON("getEventData.php", {"eventId":eventId}, function(data){
 		var details = "";
 		details += data.participants.length+" / ";
@@ -140,7 +141,7 @@ foreach ($events as $evt) {
 	echo <<<EOD
 	<div class="$eventStyle" onclick="openEvent('$eventId')" on>
 		<div class="eventTitle" id="evtTitle-$eventId">$eventTitle</div>
-		<div class="eventSummary" id="evtDetails-$eventId">...</div>
+		<div class="eventSummary" id="evtDetails-$eventId">&nbsp;</div>
 	</div>
 	<script type="text/javascript">enqueueEvent($eventId)</script>
 EOD;
