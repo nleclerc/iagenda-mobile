@@ -1,6 +1,6 @@
 <?php
-include_once 'inc/ioUtil.php';
-include_once 'inc/eventUtil.php';
+include_once '../inc/ioUtil.php';
+include_once '../inc/eventUtil.php';
 session_start();
 
 header('Content-type: application/json; charset=utf-8');

@@ -4,8 +4,7 @@ function jumpTo(url){
 }
 
 function getCurrentDate(){
-	var now = new Date();
-	return getDoubleDigit(now.getDate())+'/'+getDoubleDigit(now.getMonth()+1)+'/'+now.getFullYear();
+	return formatDate(new Date())
 }
 
 function getDoubleDigit(number){
@@ -32,7 +31,7 @@ function loadAndRefresh(url, args, callback){
 }
 
 function logout(){
-	loadAndRefresh("logout.php");
+	loadAndRefresh("services/logout.php");
 }
 
 function formatMaxParticipants(count){
@@ -44,9 +43,40 @@ function formatMaxParticipants(count){
 		return "inconnu (ERREUR)";
 }
 
-function formatDate(source) {
-	if (getCurrentDate() == source)
-		return "Aujourd'hui, "+source;
+function formatDate(date) {
+	return getDoubleDigit(date.getDate())+'/'+getDoubleDigit(date.getMonth()+1)+'/'+date.getFullYear();
+}
+
+function beautifyDate(date, referenceDate){
+	if (referenceDate == date)
+		return "Aujourd'hui, "+date;
 	
-	return source;
+	return date;
+}
+
+function setErrorMessage(message){
+	var errorZone = $("#errorMessage");
+	errorZone.addClass("errorMessage");
+	errorZone.html(message);
+}
+
+function addMonth(date){
+	return new Date(date.getFullYear(), date.getMonth()+1, 1);
+}
+
+function isBefore(testedDate, referenceDate){
+	return parseDate(testedDate) < parseDate(referenceDate);
+}
+
+function parseDate(dateString){
+	var dateParts = dateString.split("/");
+	return new Date(dateParts[2], dateParts[1]-1, dateParts[0]);
+}
+
+function enable(element){
+	element.removeAttr('disabled');
+}
+
+function disable(element){
+	element.attr('disabled', 'true');
 }

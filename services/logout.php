@@ -1,5 +1,5 @@
 <?php
-include_once 'inc/ioUtil.php';
+include_once '../inc/ioUtil.php';
 session_start();
 logout();
 ?>

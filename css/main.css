@@ -182,3 +182,9 @@ button {
 	font-weight: bold;
 	color: black;
 }
+
+#loadMoreButton{
+	margin-top: 20px;
+	margin-bottom: 5px;
+	opacity: 0.4;
+}

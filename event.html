@@ -22,31 +22,29 @@ var eventId = null;
 var userId = null;
 
 function loadEvent(){
-	$.getJSON("getEventData.php"+window.location.search, null, handleData);
+	$.getJSON("services/getEventData.php"+window.location.search, null, handleData);
 }
 
 function handleData(data) {
 	if (!data.loggedIn)
 		window.location.href = "login.php";
 	
-	if (data.errorMessage) {
-		$("#errorMessage").html(data.errorMessage);
-		$("#errorMessage").addClass("errorMessage");
-	}
+	if (data.errorMessage)
+		setErrorMessage(data.errorMessage);
 	
 	if (data.isParticipating) {
 		$('#eventDetails').addClass('participatingEvent');
-		$('#unsubscribeButton').removeAttr('disabled');
+		enable($('#unsubscribeButton'));
 	}
 	else
-		$('#subscribeButton').removeAttr('disabled');
+		enable($('#subscribeButton'));
 	
 	eventId = data.id;
 	userId = data.userid;
 	
 	$('#username').html(data.username);
 	$('#eventDetailsTitle').html(data.title);
-	$('#eventDate').html(formatDate(data.date));
+	$('#eventDate').html(beautifyDate(data.date, getCurrentDate()));
 	
 	$('#organizerMailto').html(data.author);
 	$('#organizerMailto').attr('href', 'mailto:'+data.authorEmail+'?subject=[iAgenda] '+data.title);
@@ -99,11 +97,11 @@ function getParticipantHtml(data, hightlight, subseq){
 }
 
 function subscribe(){
-	loadAndRefresh("subscribe.php", {userId: userId, eventId: eventId})
+	loadAndRefresh("services/subscribe.php", {userId: userId, eventId: eventId})
 }
 
 function unsubscribe(){
-	loadAndRefresh("unsubscribe.php", {userId: userId, eventId: eventId})
+	loadAndRefresh("services/unsubscribe.php", {userId: userId, eventId: eventId})
 }
 </script>
 
