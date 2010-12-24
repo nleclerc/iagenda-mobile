@@ -42,7 +42,7 @@ $events = array_merge($events, parseEventist(getAgendaPage($nextMonthDate['mon']
 <link rel="stylesheet" href="css/main.css" type="text/css" />
 
 <script type="text/javascript" src="scripts/jquery-1.4.4.min.js"></script>
-
+<script type="text/javascript" src="scripts/iagenda.js"></script>
 <script type="text/javascript">
 /*
 $.ajaxSetup({"error":function(XMLHttpRequest,textStatus, errorThrown) {   
@@ -101,9 +101,9 @@ function loadEventData(eventId, callback) {
 <body>
 
 <div class="header">
-<a href="."><img class="headerLogo" alt="iAgenda" src="images/calendar.png"></a>
+<img class="headerLogo" alt="iAgenda" src="images/calendar.png" onclick="jumpTo('.')">
 <?= $username ?>
-<a href="logout.php"><img class="quitButton" alt="Quit" src="images/close.png"></a>
+<img class="quitButton" alt="Quit" src="images/close.png" onclick="logout()">
 </div>
 
 <?php 
