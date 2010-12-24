@@ -18,11 +18,11 @@ body, html {
 	box-shadow: 0 0 15px black;
 }
 
-.eventDetailsParticipating, .highlightedListItem, .subseqHighlightedListItem {
+.eventDetailsParticipating, .highlightedListItem, .subseqHighlightedListItem, .participatingEvent {
 	background-color: #ffe9c7;
 }
 
-.eventDetails, .listItem, .eventDetailsParticipating, .subseqListItem, .highlightedListItem, .subseqHighlightedListItem {
+.eventDetails, .listItem, .eventDetailsParticipating, .subseqListItem, .highlightedListItem, .subseqHighlightedListItem, #eventDetails {
 	padding-left: 5px;
 	padding-right: 5px;
 	padding-top: 5px;
@@ -54,7 +54,7 @@ body, html {
 	white-space: nowrap;
 }
 
-.eventSummary, .eventTime, .participantDetails, .participantMailto, .organizerMailto {
+.eventSummary, .eventTime, .participantDetails, .participantMailto, .organizerMailto, #organizerMailto {
 	color: #888888;
 	font-size: small;
 	
@@ -115,21 +115,21 @@ body, html {
 	right: 2px;
 }
 
-.eventDetailsTitle {
+.eventDetailsTitle, #eventDetailsTitle {
 	font-weight: bold;
 	font-size: large;
 }
 
-.eventDetailsDesc {
+.eventDetailsDesc, #eventDetailsDesc {
 	margin-top: 20px;
 	color: #444444;
 }
 
-.eventDetailsDesc a {
+.eventDetailsDesc a, #eventDetailsDesc a {
 	color: #a12700;
 }
 
-.eventDetailsDesc a:visited {
+.eventDetailsDesc a:visited, #eventDetailsDesc a:visited {
 	color: #4e1300;
 }
 
@@ -175,9 +175,10 @@ button {
 	font-weight: bold;
 	
 	padding: 4px;
+	margin: 5px;
 }
 
-.hour {
+.hour, #eventDetailsDesc .highlight {
 	font-weight: bold;
 	color: black;
 }

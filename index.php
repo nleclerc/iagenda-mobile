@@ -67,11 +67,11 @@ function processQueue(){
 }
 
 function openEvent(eventId) {
-	window.location.href = "event.php?eventId="+eventId;
+	window.location.href = "event.html?eventId="+eventId;
 }
 
 function loadEventData(eventId, callback) {
-	$.getJSON("eventData.php", {"eventId":eventId}, function(data){
+	$.getJSON("getEventData.php", {"eventId":eventId}, function(data){
 		var details = "";
 		details += data.participants.length+" / ";
 		

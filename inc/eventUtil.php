@@ -208,7 +208,7 @@ function getUserIdFromContent($content) {
 	$result = rmatch('%<input type="hidden" name="membre" value="(\d+)" />%', $content);
 	
 	if ($result)
-		return $result[0];
+		return intval($result[0]);
 	
 	return null;
 }

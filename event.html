@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name='HandheldFriendly' content='True' />
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+<title>iAgenda Mobile</title>
+
+<link rel="shortcut icon" href="images/favicon.png">
+<link rel="stylesheet" href="css/main.css" type="text/css" />
+
+<script type="text/javascript" src="scripts/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="scripts/iagenda.js"></script>
+<script type="text/javascript">
+$(loadEvent);
+
+var eventId = null;
+var userId = null;
+
+function loadEvent(){
+	$.getJSON("getEventData.php"+window.location.search, null, handleData);
+}
+
+function handleData(data) {
+	if (!data.loggedIn)
+		window.location.href = "login.php";
+	
+	if (data.errorMessage) {
+		$("#errorMessage").html(data.errorMessage);
+		$("#errorMessage").addClass("errorMessage");
+	}
+	
+	if (data.isParticipating) {
+		$('#eventDetails').addClass('participatingEvent');
+		$('#unsubscribeButton').removeAttr('disabled');
+	}
+	else
+		$('#subscribeButton').removeAttr('disabled');
+	
+	eventId = data.id;
+	userId = data.userid;
+	
+	$('#username').html(data.username);
+	$('#eventDetailsTitle').html(data.title);
+	$('#eventDate').html(formatDate(data.date));
+	
+	$('#organizerMailto').html(data.author);
+	$('#organizerMailto').attr('href', 'mailto:'+data.authorEmail+'?subject=[iAgenda] '+data.title);
+
+	$('#eventDetailsDesc').html(formatDescription(data.description));
+	
+	$('#participantCount').html(data.participants.length+' / '+formatMaxParticipants(data.maxParticipants));
+	
+	for (var i=0; i<data.participants.length; i++) {
+		var p = data.participants[i];
+		$('#participants').append(getParticipantHtml(p, data.userid==p.id, i>0))
+	}
+}
+
+function formatDescription(source) {
+	var result = source;
+	
+	result = result.replace(/(\d?\d[hH]\d{0,2})/g, '<span class="highlight">$1</span>');
+//	result = result.replace(/(ATTENTION)/g, '<span class="highlight">$1</span>');
+//	result = result.replace(/(NOTE)/g, '<span class="highlight">$1</span>');
+	
+	result = result.replace(/((0\d)[.\- ]?(\d\d)[.\- ]?(\d\d)[.\- ]?(\d\d)[.\- ]?(\d\d))/g, '<a href="tel:$2$3$4$5$6">$1</a>');
+	
+	result = result.replace(/(https?:\/\/\S+)/g, '<a href="$1">$1</a>');
+	result = result.replace(/([^:\/])(www.\S+)/g, '$1<a href="http://$2">$2</a>');
+	
+	result = result.replace(/(ftp:\/\/\S+)/g, '<a href="$1">$1</a>');
+	result = result.replace(/([A-Za-z0-9.\+]+@[A-Za-z0-9.]+\.[A-Za-z]+)/g, '<a href="mailto:$1">$1</a>');
+
+
+	return result;
+}
+
+function getParticipantHtml(data, hightlight, subseq){
+	var styles = 'listItem';
+	
+	if (hightlight)
+		styles += ' highlightedItem';
+	
+	if (subseq)
+		styles += ' subseqListItem';
+	
+	var result = '';
+	result += '<div class="'+styles+'">';
+	result += '<div class="participantName">'+data.name+'</div>';
+	result += '<div class="participantDetails">'+data.id+' - <a class="participantMailto" href="mailto:'+data.email+'">'+data.email+'</a></div>';
+	result += '</div>';
+	
+	return result;
+}
+
+function subscribe(){
+	loadAndRefresh("subscribe.php", {userId: userId, eventId: eventId})
+}
+
+function unsubscribe(){
+	loadAndRefresh("unsubscribe.php", {userId: userId, eventId: eventId})
+}
+</script>
+
+<script type="text/javascript" src="/ga.js"></script>
+</head>
+
+<body>
+
+<div class="header">
+<img class="headerLogo" alt="Retour" src="images/back.png" onclick="jumpTo('.')">
+<span id="username"></span>
+<img class="quitButton" alt="Quit" src="images/close.png" onclick="logout()">
+</div>
+
+<div id="errorMessage"></div>
+<div id="eventDetails" class="list">
+<div id="eventDetailsTitle"></div>
+<div class="eventTime"><span id="eventDate"></span> - <a id="organizerMailto"></a></div>
+
+<div id="eventDetailsDesc"></div>
+<div>
+
+<div id="controlBar">
+<button type="button" id="subscribeButton" disabled="true" onclick="subscribe()">S'inscrire</button>
+<button type="button" id="unsubscribeButton" disabled="true" onclick="unsubscribe()">Se désinscrire</button>
+</div>
+
+</div>
+</div>
+
+<div class="participantMaxCount">Participants: <span id="participantCount"></span></div>
+<div class="list" id="participants"></div>
+
+</body>
+</html>

@@ -27,6 +27,7 @@ else {
 		
 		$result = (array)$eventDetails;
 		$result["username"] = $username;
+		$result["userid"] = $userId;
 		$result["isParticipating"] = $eventDetails->isParticipating($userId);
 	}
 	
