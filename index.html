@@ -48,7 +48,7 @@ function handleNewEvents(data){
 		loadCount++;
 		listingDate = addMonth(listingDate);
 		
-		$('#username').html(data.username);
+		$('#headerTitle').html(data.username);
 		
 		for (var i=0; i<data.events.length; i++)
 			if (!isBefore(data.events[i].date, currentDate))
@@ -141,10 +141,10 @@ function loadEventData(eventId, callback) {
 </head>
 <body class="hidden">
 
-<div class="header">
-<img class="headerLogo" alt="iAgenda" src="images/calendar.png" onclick="jumpTo('.')">
-<span id="username"></span>
-<img class="quitButton" alt="Quit" src="images/close.png" onclick="logout()">
+<div id="header">
+<img id="headerLogo" alt="iAgenda" src="images/calendar.png" onclick="jumpTo('.')">
+<div id="headerTitle">iAgenda Mobile</div>
+<img id="quitButton" alt="Quit" src="images/close.png" onclick="logout()">
 </div>
 
 <div id="errorMessage"></div>

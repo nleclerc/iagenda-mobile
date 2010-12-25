@@ -39,12 +39,13 @@ if ($receivedLogin) {
 </head>
 <body>
 
+<div id="header">
+<img id="headerLogo" alt="iAgenda" src="images/calendar.png">
+<div id="headerTitle">iAgenda Mobile</div>
+</div>
+
 <form action="#" method="post">
 <div id="loginForm">
-<div id="loginHeader">
-<img class="headerLogo" alt="iAgenda" src="images/calendar.png">
-iAgenda Mobile
-</div>
 
 <?php if ($errorMessage != '') echo "<div class=\"errorMessage\">$errorMessage</div>" ?>
 
