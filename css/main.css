@@ -52,10 +52,20 @@ body {
 	border-top: 1px solid #AAAAAA;
 }
 
-.eventTitle {
+.eventTitle, .participantName {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
+}
+
+.participantName, .participantDetails {
+	margin-right: 43px;
+}
+
+.personIcon {
+	position: relative;
+	top: -38px;
+	float: right;
 }
 
 .eventSummary, .participantDetails, .participantMailto, #organizerMailto {
