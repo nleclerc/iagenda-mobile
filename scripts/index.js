@@ -1,19 +1,49 @@
 var queue = new Array();
-var maxLoads = 5;
-var reloadThreshold = 5;
 
 var currentDate = getCurrentDate();
-var listingDate = new Date;
+var listingDate = new Date();
 
 var blockIndex = new Object();
-var loadCount = 0;
 var eventCount = 0;
 
-$(loadNextEvents);
+var stopLoading = false;
+var eventLoading = false;
+var queueInProcess = false;
+
+var init = true;
+
+function setLoadStatus(data){
+	$('#loadStatus').html(data);
+}
+
+function resetLoadStatus(){
+	setLoadStatus('<a href="javascript:loadNextEvents()">Charger plus d\'évènements...</a>');
+}
+
+function isBottom(){
+	return (window.pageYOffset+$(window).height()) >= ($(document).height());
+}
+
+function checkScrollToBottom(){
+	if (isBottom()) {
+		loadNextEvents();
+		return true;
+	}
+	
+	init = false;
+	return false;
+}
 
 function loadNextEvents(){
-	disable($('#loadMoreButton'));
-	$.getJSON("services/listEvents.php", {month:listingDate.getMonth()+1, year:listingDate.getFullYear()}, handleNewEvents);
+	if (!eventLoading) {
+		if (!stopLoading) {
+			eventLoading = true;
+			setLoadStatus('Chargement en cours...');
+			$.getJSON("services/listEvents.php", {month:listingDate.getMonth()+1, year:listingDate.getFullYear()}, handleNewEvents);
+		} else {
+			processQueue(); // in case max loading happens because screen is too tall.
+		}
+	}
 }
 
 function handleNewEvents(data){
@@ -22,30 +52,29 @@ function handleNewEvents(data){
 		return;
 	}
 	
-	showBody();
-	
 	if (data.errorMessage)
 		setErrorMessage(data.errorMessage);
 	else {
-		loadCount++;
-		listingDate = addMonth(listingDate);
-		
-		$('#headerTitle').html(data.username);
-		
-		for (var i=0; i<data.events.length; i++)
-			if (!isBefore(data.events[i].date, currentDate))
-				addEvent(data.events[i]);
-		
-		showBody();
-		
-		if (loadCount < maxLoads) {
-			if (eventCount < reloadThreshold)
-				loadNextEvents();
-			else {
-				processQueue();
-				enable($('#loadMoreButton'));
-			}
+		if (data.events.length == 0) {
+			// found empty month, stop loading
+			stopLoading = true;
+			setLoadStatus("Plus d'autres évènements ensuite.");
+		} else {
+			listingDate = addMonth(listingDate);
+			
+			$('#headerTitle').html(data.username);
+			
+			for (var i=0; i<data.events.length; i++)
+				if (!isBefore(data.events[i].date, currentDate))
+					addEvent(data.events[i]);
+			
+			eventLoading = false;
+			resetLoadStatus();
 		}
+		
+		// process queue only if not at bottom ie. not reloading events.
+		if (!init || !checkScrollToBottom())
+			processQueue();
 	}
 }
 
@@ -82,9 +111,10 @@ function createDateBlock(date){
 }
 
 function processQueue(){
-	if (queue.length == 0)
+	if (queue.length == 0 || queueInProcess)
 		return;
-
+	
+	queueInProcess = true;
 	loadEventData(queue.shift(), processQueue);
 }
 
@@ -112,6 +142,8 @@ function loadEventData(eventId, callback) {
 
 		if (data.isParticipating)
 			$("#evtTitle-"+data.id).addClass("highlightedItem");
+		
+		queueInProcess = false;
 
 		if (callback)
 			callback();

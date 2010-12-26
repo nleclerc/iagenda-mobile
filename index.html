@@ -17,9 +17,15 @@
 <script type="text/javascript" src="scripts/common.js"></script>
 <script type="text/javascript" src="scripts/index.js"></script>
 
+<script type="text/javascript">
+$(checkScrollToBottom);
+$(window).scroll(checkScrollToBottom);
+$(window).resize(checkScrollToBottom);
+</script>
+
 <script type="text/javascript" src="/ga.js"></script>
 </head>
-<body class="hidden">
+<body>
 
 <div id="header">
 <img id="headerLogo" alt="iAgenda" src="images/calendar.png" onclick="jumpTo('.')">
@@ -30,7 +36,7 @@
 <div id="errorMessage"></div>
 <div id='eventList'></div>
 
-<button type="button" id="loadMoreButton" onclick="loadNextEvents()" disabled="true">Evénements suivants</button>
+<div id="loadStatus" class="listDate">...</div>
 
 </body>
 </html>
