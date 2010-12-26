@@ -33,6 +33,8 @@ function handleData(data){
 		setErrorMessage(data.errorMessage);
 	
 	if (data.id) {
+		$('#headerTitle').html(data.username);
+		
 		$('#memberName').html(data.name);
 		$('#memberId').html('- #'+data.id);
 		
