@@ -10,6 +10,40 @@ function createEventEntry($id, $title, $date){
 	);
 }
 
+function createEventDetails($id, $definition){
+	$data = rmatch('%<th.*?>(.*?)</th>.*?Activit&eacute; propos&eacute;e par (.+?)</td>.*?mailto:(.+?)".*?<b>(.*?)</b>.*?<b>(.*?)</b>.*?<td>(.*?)</td>%', $definition);
+	
+	$participants = array();
+	$participantMatches = array();
+	
+	if (preg_match_all('%<td>(\d+?) - <a href="mailto:(.+?)">(.+?)</a>%', $definition, $participantMatches))
+		for ($i=0; $i<count($participantMatches[0]); $i++)
+			array_push($participants, createParticipant($participantMatches[1][$i], $participantMatches[3][$i], $participantMatches[2][$i]));
+	
+	return array(
+		'id' => intval($id),
+		'title' => decodeEntities($data[3]),
+		'date' => reformatDate($data[0]),
+		'author' => decodeEntities($data[1]),
+		'authorEmail' => $data[2],
+		'description' => decodeEntities($data[5]),
+		'participants' => $participants,
+		'maxParticipants' => parseMaxCount($data[4])
+	);
+}
+
+function createParticipant($id, $name, $email){
+	$result = array(
+		'id' => intval($id),
+		'name' => decodeEntities($name)
+	);
+	
+	if ($email)
+		$result['email'] = $email;
+	
+	return $result;
+}
+
 function formatDate($day, $month, $year){
 	return formatDigits($day)."/".formatDigits($month)."/".$year;
 }
@@ -50,46 +84,12 @@ function parseMaxCount($definition) {
 	return 0;
 }
 
-function createEventDetails($id, $definition){
-	$data = rmatch('%<th.*?>(.*?)</th>.*?Activit&eacute; propos&eacute;e par (.+?)</td>.*?mailto:(.+?)".*?<b>(.*?)</b>.*?<b>(.*?)</b>.*?<td>(.*?)</td>%', $definition);
-	
-	$participants = array();
-	$participantMatches = array();
-	
-	if (preg_match_all('%<td>(\d+?) - <a href="mailto:(.+?)">(.+?)</a>%', $definition, $participantMatches))
-		for ($i=0; $i<count($participantMatches[0]); $i++)
-			array_push($participants, createParticipant($participantMatches[1][$i], $participantMatches[3][$i], $participantMatches[2][$i]));
-	
-	return array(
-		'id' => intval($id),
-		'title' => decodeEntities($data[3]),
-		'date' => reformatDate($data[0]),
-		'author' => decodeEntities($data[1]),
-		'authorEmail' => $data[2],
-		'description' => decodeEntities($data[5]),
-		'participants' => $participants,
-		'maxParticipants' => parseMaxCount($data[4])
-	);
-}
-
 function isParticipating($eventDetails, $userId){
 	foreach ($eventDetails['participants'] as $p)
 		if ($p['id'] == $userId)
 			return true;
 	
 	return false;
-}
-
-function createParticipant($id, $name, $email){
-	$result = array(
-		'id' => intval($id),
-		'name' => decodeEntities($name)
-	);
-	
-	if ($email)
-		$result['email'] = $email;
-	
-	return $result;
 }
 
 function reformatDate($originalDate) {
