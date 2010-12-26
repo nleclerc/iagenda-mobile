@@ -1,10 +1,12 @@
-$(loadEvent);
-
 var eventId = null;
 var userId = null;
 
 function loadEvent(){
 	$.getJSON("services/getEventData.php"+window.location.search, null, handleData);
+}
+
+function showEventBody(){
+	$('#eventbody').fadeIn(200);
 }
 
 function handleData(data) {
@@ -28,9 +30,11 @@ function handleData(data) {
 	$('#eventDetailsTitle').html(data.title);
 	$('#eventDate').html(beautifyDate(data.date, getCurrentDate()));
 	
-	$('#organizerMailto').html(data.author);
-	$('#organizerMailto').attr('href', 'mailto:'+data.authorEmail+'?subject=[iAgenda] '+data.title);
-
+	if (data.authorEmail)
+		$('#eventAuthor').html('<a id="organizerMailto" href="mailto:'+data.authorEmail+'?subject=[iAgenda] '+data.title+'">'+data.author+'</a>');
+	else
+		$('#eventAuthor').html(data.author);
+	
 	$('#eventDetailsDesc').html(formatDescription(data.description));
 	
 	$('#participantCount').html(data.participants.length+' / '+formatMaxParticipants(data.maxParticipants));
@@ -40,7 +44,7 @@ function handleData(data) {
 		$('#participants').append(getParticipantHtml(p, data.userid==p.id, i>0))
 	}
 	
-	showBody();
+	showEventBody();
 }
 
 function formatDescription(source) {

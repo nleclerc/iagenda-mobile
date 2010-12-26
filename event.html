@@ -17,10 +17,14 @@
 <script type="text/javascript" src="scripts/common.js"></script>
 <script type="text/javascript" src="scripts/event.js"></script>
 
+<script type="text/javascript">
+$(loadEvent);
+</script>
+
 <script type="text/javascript" src="/ga.js"></script>
 </head>
 
-<body class="hidden">
+<body>
 
 <div id="header">
 <img id="headerLogo" alt="iAgenda" src="images/back.png" onclick="jumpTo('.')">
@@ -29,23 +33,25 @@
 </div>
 
 <div id="errorMessage"></div>
-<div id="eventDetails" class="list">
-<div id="eventDetailsTitle"></div>
-<div class="eventSummary"><span id="eventDate"></span> - <a id="organizerMailto"></a></div>
 
-<div id="eventDetailsDesc"></div>
-<div>
-
-<div id="controlBar">
-<button type="button" id="subscribeButton" disabled="true" onclick="subscribe()">S'inscrire</button>
-<button type="button" id="unsubscribeButton" disabled="true" onclick="unsubscribe()">Se désinscrire</button>
+<div id="eventbody" class="hidden">
+	<div id="eventDetails" class="list">
+	<div id="eventDetailsTitle"></div>
+	<div class="eventSummary"><span id="eventDate"></span> - <span id="eventAuthor"></span></div>
+	
+	<div id="eventDetailsDesc"></div>
+	<div>
+	
+	<div id="controlBar">
+	<button type="button" id="subscribeButton" disabled="true" onclick="subscribe()">S'inscrire</button>
+	<button type="button" id="unsubscribeButton" disabled="true" onclick="unsubscribe()">Se désinscrire</button>
+	</div>
+	
+	</div>
+	</div>
+	
+	<div class="participantMaxCount">Participants: <span id="participantCount"></span></div>
+	<div class="list" id="participants"></div>
 </div>
-
-</div>
-</div>
-
-<div class="participantMaxCount">Participants: <span id="participantCount"></span></div>
-<div class="list" id="participants"></div>
-
 </body>
 </html>

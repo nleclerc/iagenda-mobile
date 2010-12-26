@@ -1,8 +1,4 @@
 
-function showBody(){
-	$(document.body).fadeIn(100);
-}
-
 function jumpTo(url){
 	window.location.href=url;
 }
