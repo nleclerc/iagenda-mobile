@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name='HandheldFriendly' content='True' />
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<link rel="apple-touch-icon" href="images/calendar-big.png" />
+
+<title>iAgenda Mobile</title>
+
+<link rel="shortcut icon" href="images/favicon.png">
+<link rel="stylesheet" href="css/main.css" type="text/css" />
+
+<script type="text/javascript" src="scripts/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="scripts/common.js"></script>
+<!--script type="text/javascript" src="scripts/event.js"></script-->
+
+<script type="text/javascript">
+$(loadMember);
+
+function loadMember(){
+	$.getJSON("services/getMemberData.php"+window.location.search, null, handleData);
+}
+
+function handleData(data){
+	if (!data.loggedIn)
+		window.location.href = "login.php";
+	
+	if (data.errorMessage)
+		setErrorMessage(data.errorMessage);
+	
+	if (data.id) {
+		$('#memberName').html(data.name);
+		$('#memberId').html('- #'+data.id);
+		
+		if (data.motto)
+			$('#memberMotto').html('"'+data.motto+'"').show();
+		
+		var actionList = $('#actionList');
+		var hasAction = false;
+		
+		var actions = sortActions(data.contacts)
+		
+		for (var i=0; i<actions.length; i++) {
+			actionList.append(createAction(actions[i].type, actions[i].value, hasAction));
+			hasAction = true;
+		}
+		
+		if (data.address) {
+			actionList.append(createAction('address', data.address.replace(/\n/g,' '), hasAction));
+			hasAction = true;
+		}
+		
+		if (hasAction)
+			$('#actionBlock').show();
+		
+		$('#pageBody').fadeIn(200);
+	}
+}
+
+function sortActions(actionList){
+	if (!actionList)
+		return new Array();
+	
+	function listTypes(actions, typeName){
+		var actionsOfType = new Array();
+		
+		for (var i=actions.length-1; i>=0; i--)
+			if (actions[i].type == typeName){
+				actionsOfType.unshift(actions[i]);
+				actions.splice(i,1);
+			}
+		
+		return actionsOfType;
+	}
+	
+	var typeOrder = ['mobile', 'phone', 'email', 'website'];
+	var actions = actionList.concat();
+	var result = new Array();
+	
+	$.each(typeOrder, function(index, type){
+		result = result.concat(listTypes(actions,type));
+	});
+	
+	result = result.concat(actions); // add remaining actions
+	return result;
+}
+
+function createAction(type, value, isSubseq){
+	var result = $('<a class="listItem"></a>');
+	
+	if (isSubseq)
+		result.addClass('subseqListItem');
+	
+	var message = 'Contacter';
+	var link = null;
+	
+	if (type == "email") {
+		message = "Envoyer un email";
+		link = 'mailto:'+value;
+	} else if (type == "phone") {
+		message = "Appeler sur son fixe";
+		link = 'tel:'+value;
+	} else if (type == "mobile") {
+		message = "Appeler sur son mobile";
+		link = 'tel:'+value;
+	} else if (type == "address") {
+		message = "Localiser";
+		link = 'http://maps.google.fr/maps?q='+value;
+	} else if (type == "website") {
+		message = "Visiter son site";
+		if (value.indexOf('://') >= 0)
+			link = value;
+		else
+			link = 'http://'+value;
+	}
+	
+	result.append('<div class="listItemTitle">'+message+'</div>');
+	result.append('<div class="listItemDetails">'+value+'</div>');
+	
+	if (link)
+		result.attr('href', link);
+	
+	return result;
+}
+
+</script>
+
+<script type="text/javascript" src="/ga.js"></script>
+</head>
+
+<body>
+
+<div id="header">
+<img id="headerLogo" alt="iAgenda" src="images/back.png" onclick="history.go(-1)">
+<div id="headerTitle">iAgenda Mobile</div>
+<img id="quitButton" alt="Quit" src="images/close.png" onclick="logout()">
+</div>
+
+<div id="errorMessage"></div>
+
+<div id="pageBody" class="hidden">
+	<div id="memberDetails" class="dataBlock">
+		<div id="memberNameBlock">
+			<span id="memberName"></span>
+			<span id="memberId"></span>
+		</div>
+		<div id="memberMotto" class="hidden"></div>
+	</div>
+	
+	<div id="actionBlock" class="hidden">
+		<div class="listTitle">Contacter</div>
+		<div id="actionList" class="list"></div>
+	</div>
+</div>
+</body>
+</html>

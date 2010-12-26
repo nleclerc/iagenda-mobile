@@ -61,7 +61,7 @@ function createMemberDetails($definition){
 	$addressMatch = rmatch('#>Adresse<.*?<span.*?>\s*(.*?)\s*</span#', $data[0]);
 	
 	if ($addressMatch)
-		$result['address'] = decodeEntities(preg_replace('#<br ?/>#', '\n', $addressMatch[1]));
+		$result['address'] = decodeEntities(preg_replace('#<br\s*/>#', "\n", $addressMatch[1]));
 	
 	// Checks for an invisible special char (\x{00a0}).
 	$deviseMatch = rmatch('#>Devise<.*?&quot;\s*\x{00a0}?(.*?)\x{00a0}?\s*&quot;#u', $data[0]);
@@ -140,8 +140,7 @@ function createContact($matches){
 	switch ($matches[1]) {
 		case 'Courriel':
 			$type = 'email';
-			$emailMatch = rmatch('#>(.*?)</#', $value);
-			$value = $emailMatch[1];
+			$value = removeEnclosingTag($value);
 			break;
 			
 		case 'Tél. fixe':
@@ -151,12 +150,27 @@ function createContact($matches){
 		case 'Tél. mobile':
 			$type = 'mobile';
 			break;
+		
+		case 'Site':
+			$type = 'website';
+			$value = removeEnclosingTag($value);
+			break;
 	}
 	
 	return array(
 		'type' => $type,
 		'value' => $value
 	);
+}
+
+function removeEnclosingTag($value){
+	$match = rmatch('#>(.*?)</#', $value);
+	
+	if ($match)
+		return $match[1];
+	
+	// no tag found, returning original value;
+	return $value;
 }
 
 function formatDate($day, $month, $year){

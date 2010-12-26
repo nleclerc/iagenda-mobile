@@ -83,6 +83,7 @@ function getParticipantHtml(data, hightlight, subseq){
 	if (data.email)
 		result += ' - <a class="participantMailto" href="mailto:'+data.email+'">'+data.email+'</a></div>';
 	
+	result += '<img src="images/person.png" class="personIcon" alt="Fiche" onclick="jumpTo(\'member.html?memberId='+data.id+'\')">';
 	result += '</div>';
 	result += '</div>';
 	
