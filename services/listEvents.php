@@ -21,7 +21,7 @@ else {
 	
 	$thisMonthAgendaContent = getAgendaPage($month, $year);
 
-	$isLoggedIn = isLoggedIn($eventDetailsContent);
+	$isLoggedIn = isLoggedIn($thisMonthAgendaContent);
 	
 	if (!$isLoggedIn)
 		$errorMessage = "Vous n'êtes pas identifié.";
