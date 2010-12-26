@@ -58,7 +58,10 @@ function handleNewEvents(data){
 		if (data.events.length == 0) {
 			// found empty month, stop loading
 			stopLoading = true;
+			init = false;
+			
 			setLoadStatus("Plus d'autres évènements ensuite.");
+			processQueue();
 		} else {
 			listingDate = addMonth(listingDate);
 			
