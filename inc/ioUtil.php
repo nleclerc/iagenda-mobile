@@ -9,22 +9,6 @@ $LOGIN_URL = "$MAIN_URL?action=connection";
 $SET_PARTICIPATION_URL = "$MAIN_URL?action=iAgenda_iactivite";
 $REMOVE_PARTICIPATION_URL = "$MAIN_URL?action=iAgenda_iactivite&d=1";
 
-
-function parseLinks($source) {
-	$result = $source;
-	$result = preg_replace('/https?:\/\/\S+/', '<a href="$0">$0</a>', $result);
-	$result = preg_replace('/ftp:\/\/\S+/', '<a href="$0">$0</a>', $result);
-	$result = preg_replace('/mailto:\S+/', '<a href="$0">$0</a>', $result);
-	$result = preg_replace('/[A-Za-z0-9.\+]+@[A-Za-z0-9.]+\.[A-Za-z]+/', '<a href="mailto:$0">$0</a>', $result);
-	$result = preg_replace('/[^:\/](www.\S+)/', '<a href="http://$1">$1</a>', $result);
-	
-	// phone links
-	$result = preg_replace('/(0\d)[.\- ]?(\d\d)[.\- ]?(\d\d)[.\- ]?(\d\d)[.\- ]?(\d\d)/', '<a href="tel:$1$2$3$4$5">$0</a>', $result);
-//	$result = preg_replace('/([+0][\d.\- ]{7,})/', '<a href="tel:$0">$0</a>', $result); // causes pb with google maps links.
-	
-	return $result;
-}
-
 function getUserNameFromContent($content) {
 	$matches = array();
 	if (preg_match("%>Bonjour (.*?)</div>%", $content, $matches))

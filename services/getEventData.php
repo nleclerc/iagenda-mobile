@@ -21,14 +21,12 @@ else {
 		$errorMessage = "Vous n'êtes pas identifié.";
 	else {
 		$userId = getUserIdFromContent($eventDetailsContent);
-		
 		$username = getUserNameFromContent($eventDetailsContent);
-		$eventDetails = new EventDetails($eventId, $eventDetailsContent);
 		
-		$result = (array)$eventDetails;
+		$result = createEventDetails($eventId, $eventDetailsContent);
 		$result["username"] = $username;
 		$result["userid"] = $userId;
-		$result["isParticipating"] = $eventDetails->isParticipating($userId);
+		$result["isParticipating"] = isParticipating($result, $userId);
 	}
 	
 	$result["loggedIn"] = $isLoggedIn;
