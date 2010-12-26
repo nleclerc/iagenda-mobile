@@ -13,6 +13,10 @@
 Ceci est un projet totallement non officiel visant à créer une version spécifiquement
 pour mobile de l'iAgenda de Mensa IDF [http://www.mensa-idf.fr].
 
+Les tests sont effectués sur Chrome, Firefox, iPhone, Android 1.6, 2.2 et 2.3 et occasionellement
+Opera mobile (non smart phone). Quand je suis vraiment motivé je lance l'émulateur Blackberry
+mais ne comptez pas trop dessus.
+
 Ce projet n'est pas affilié à Mensa et ne prétent aucunement représenter Mensa Internationale
 ou une quelconque de ses entités locales.
 
