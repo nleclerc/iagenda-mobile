@@ -1,6 +1,6 @@
 <?php
-include_once '../inc/ioUtil.php';
-include_once '../inc/eventUtil.php';
+include_once '../inc/io.php';
+include_once '../inc/data.php';
 session_start();
 
 header('Content-type: application/json; charset=utf-8');
@@ -10,7 +10,7 @@ $errorMessage = '';
 $result = array();
 	
 if (!isset($_GET['eventId']))
-	$errorMessage = "Identifiant d'événement manquant.";
+	$errorMessage = "Identifiant d'événement manquant (eventId).";
 else {
 	$eventId = $_GET['eventId'];
 	$eventDetailsContent = getEventDetailPage($eventId);
@@ -32,6 +32,6 @@ else {
 	$result["loggedIn"] = $isLoggedIn;
 }
 
-$result["errorMessage"] = escapeQuotes($errorMessage);
+$result["errorMessage"] = $errorMessage;
 echo json_encode($result);
 ?>

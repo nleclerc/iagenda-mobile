@@ -9,6 +9,8 @@ $LOGIN_URL = "$MAIN_URL?action=connection";
 $SET_PARTICIPATION_URL = "$MAIN_URL?action=iAgenda_iactivite";
 $REMOVE_PARTICIPATION_URL = "$MAIN_URL?action=iAgenda_iactivite&d=1";
 
+$MEMBER_DETAILS_URL = "$MAIN_URL?action=membre_detail";
+
 function getUserNameFromContent($content) {
 	$matches = array();
 	if (preg_match("%>Bonjour (.*?)</div>%", $content, $matches))
@@ -93,6 +95,11 @@ function getAgendaPage($month, $year) {
 function getEventDetailPage($eventId) {
 	global $EVENT_URL;
 	return readFileContent("$EVENT_URL&id=$eventId");
+}
+
+function getMemberDetailPage($memberId) {
+	global $MEMBER_DETAILS_URL;
+	return readFileContent("$MEMBER_DETAILS_URL&numero=$memberId");
 }
 
 function setEventParticipation($eventId, $userId) {

@@ -1,6 +1,6 @@
 <?php
-include_once '../inc/ioUtil.php';
-include_once '../inc/eventUtil.php';
+include_once '../inc/io.php';
+include_once '../inc/data.php';
 session_start();
 
 header('Content-type: application/json; charset=utf-8');
@@ -40,6 +40,6 @@ else {
 	
 	$result["loggedIn"] = $isLoggedIn;
 }
-$result["errorMessage"] = escapeQuotes($errorMessage);
+$result["errorMessage"] = $errorMessage;
 echo json_encode($result);
 ?>

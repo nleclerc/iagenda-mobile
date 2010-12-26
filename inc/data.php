@@ -148,15 +148,4 @@ function getNextMonth($date) {
 	return getdate(mktime(12, 30, 30, $currentMonth, 1, $currentYear));
 }
 
-function insertHighlights($source) {
-	$result = $source;
-	$result = preg_replace('/\d?\d[hH]\d{0,2}/', '<span class="hour">$0</span>', $result);
-	
-	return $result;
-}
-
-function escapeQuotes($source) {
-	return preg_replace('/"/', '\\"', $source);
-}
-
 ?>
