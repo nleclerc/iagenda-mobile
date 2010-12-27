@@ -61,7 +61,10 @@ function formatDescription(source) {
 	
 	result = result.replace(/(ftp:\/\/\S+)/g, '<a href="$1">$1</a>');
 	result = result.replace(/([A-Za-z0-9.\+]+@[A-Za-z0-9.]+\.[A-Za-z]+)/g, '<a href="mailto:$1">$1</a>');
-
+	
+	
+	// location hack using custom tag in html.
+	result = result.replace(/<lieu>(.+?)<\/lieu>/g, '<a href="http://maps.google.fr/maps?q=$1">$1</a>');
 
 	return result;
 }
