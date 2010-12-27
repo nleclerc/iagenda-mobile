@@ -68,7 +68,7 @@ img{
 	margin-right: 5px;
 }
 
-.listItemDetails, .participantMailto, #organizerMailto {
+.listItemDetails, #eventSummary, .participantMailto, #organizerMailto {
 	color: #888888;
 	font-size: small;
 	
