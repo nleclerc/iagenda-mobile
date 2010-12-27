@@ -47,11 +47,20 @@ function formatDate(date) {
 	return getDoubleDigit(date.getDate())+'/'+getDoubleDigit(date.getMonth()+1)+'/'+date.getFullYear();
 }
 
+var daysOfWeek = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+
+function getWeekDay(datestr){
+	var date = new Date(datestr.match(/\d+$/), datestr.match(/\/\d+\//).toString().match(/\d+/)-1, datestr.match(/^\d+/));
+	return daysOfWeek[date.getDay()];
+}
+
 function beautifyDate(date, referenceDate){
-	if (referenceDate == date)
-		return "Aujourd'hui, "+date;
+	var result = date+' : '+getWeekDay(date)
 	
-	return date;
+	if (referenceDate == date)
+		result = "Aujourd'hui, "+result;;
+	
+	return result;
 }
 
 function setErrorMessage(message){
