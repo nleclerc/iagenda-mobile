@@ -91,8 +91,8 @@ function addEvent(eventData){
 	}
 	
 	var eventDiv = $('<div class="listItem" onclick="openEvent('+eventData.id+')"></div>');
-	eventDiv.append('<div class="eventTitle" id="evtTitle-'+eventData.id+'">'+eventData.title+'</div>');
-	eventDiv.append('<div class="eventSummary" id="evtDetails-'+eventData.id+'">&nbsp;</div>');
+	eventDiv.append('<div class="listItemTitle" id="evtTitle-'+eventData.id+'">'+eventData.title+'</div>');
+	eventDiv.append('<div class="listItemDetails" id="evtDetails-'+eventData.id+'">&nbsp;</div>');
 	
 	if (!first)
 		eventDiv.addClass('subseqListItem');
