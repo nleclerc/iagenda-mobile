@@ -76,16 +76,16 @@ function getParticipantHtml(data, hightlight, subseq){
 		styles += ' subseqListItem';
 	
 	var result = '';
-	result += '<div class="'+styles+'">';
-	result += '<img src="images/person.png" class="personIcon" alt="Fiche" onclick="jumpTo(\'member.html?memberId='+data.id+'\')">';
+	result += '<a class="'+styles+'" onclick="jumpTo(\'member.html?memberId='+data.id+'\')">';
+	result += '<img src="images/person.png" class="personIcon" alt="Fiche">';
 	result += '<div class="participantName iconLabel">'+data.name+'</div>';
 	result += '<div class="participantDetails iconLabel">'+data.id;
 	
 	if (data.email)
-		result += ' - <a class="participantMailto" href="mailto:'+data.email+'">'+data.email+'</a></div>';
+		result += ' - '+data.email+'</div>';
 	
 	result += '</div>';
-	result += '</div>';
+	result += '</a>';
 	
 	return result;
 }
