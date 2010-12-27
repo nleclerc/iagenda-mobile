@@ -13,6 +13,10 @@ body {
 	font-family: sans-serif;
 }
 
+img{
+	border: none;
+}
+
 .hidden {
 	display: none;
 }
