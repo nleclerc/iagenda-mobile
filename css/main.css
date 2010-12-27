@@ -58,14 +58,13 @@ body {
 	white-space: nowrap;
 }
 
-.participantName, .participantDetails {
-	margin-right: 43px;
+.actionIcon, .personIcon {
+	position: relative;
+	float: left;
 }
 
-.personIcon {
-	position: relative;
-	top: -38px;
-	float: right;
+.iconLabel {
+	margin-left: 40px;
 }
 
 .listItemDetails, .eventSummary, .participantDetails, .participantMailto, #organizerMailto {

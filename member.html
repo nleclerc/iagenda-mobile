@@ -120,8 +120,9 @@ function createAction(type, value, isSubseq){
 			link = 'http://'+value;
 	}
 	
-	result.append('<div class="listItemTitle">'+message+'</div>');
-	result.append('<div class="listItemDetails">'+value+'</div>');
+	result.append('<img src="images/action-'+type+'.png" class="actionIcon">');
+	result.append('<div class="listItemTitle iconLabel">'+message+'</div>');
+	result.append('<div class="listItemDetails iconLabel">'+value+'</div>');
 	
 	if (link)
 		result.attr('href', link);

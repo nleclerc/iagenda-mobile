@@ -77,13 +77,13 @@ function getParticipantHtml(data, hightlight, subseq){
 	
 	var result = '';
 	result += '<div class="'+styles+'">';
-	result += '<div class="participantName">'+data.name+'</div>';
-	result += '<div class="participantDetails">'+data.id;
+	result += '<img src="images/person.png" class="personIcon" alt="Fiche" onclick="jumpTo(\'member.html?memberId='+data.id+'\')">';
+	result += '<div class="participantName iconLabel">'+data.name+'</div>';
+	result += '<div class="participantDetails iconLabel">'+data.id;
 	
 	if (data.email)
 		result += ' - <a class="participantMailto" href="mailto:'+data.email+'">'+data.email+'</a></div>';
 	
-	result += '<img src="images/person.png" class="personIcon" alt="Fiche" onclick="jumpTo(\'member.html?memberId='+data.id+'\')">';
 	result += '</div>';
 	result += '</div>';
 	
