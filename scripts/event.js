@@ -62,7 +62,6 @@ function formatDescription(source) {
 	result = result.replace(/(ftp:\/\/\S+)/g, '<a href="$1">$1</a>');
 	result = result.replace(/([A-Za-z0-9.\+]+@[A-Za-z0-9.]+\.[A-Za-z]+)/g, '<a href="mailto:$1">$1</a>');
 	
-	
 	// location hack using custom tag in html.
 	result = result.replace(/<lieu>(.+?)<\/lieu>/g, '<a href="http://maps.google.fr/maps?q=$1">$1</a>');
 
@@ -80,7 +79,7 @@ function getParticipantHtml(data, hightlight, subseq){
 	
 	var result = '';
 	result += '<a class="'+styles+'" onclick="jumpTo(\'member.html?memberId='+data.id+'\')">';
-	result += '<img src="images/person.png" class="personIcon" alt="Fiche membre">';
+	result += '<img src="images/person.png" class="listItemIcon" alt="Fiche membre">';
 	result += '<div class="listItemTitle iconLabel">'+data.name+'</div>';
 	result += '<div class="listItemDetails iconLabel">'+data.id;
 	
