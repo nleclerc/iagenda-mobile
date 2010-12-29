@@ -36,31 +36,89 @@ function handleData(data){
 		$('#headerTitle').html(data.username);
 		
 		$('#memberName').html(data.name);
-		$('#memberId').html('- #'+data.id);
+		$('#memberId').html('#'+data.id);
+		$('#memberRegion').html(' - '+data.region);
 		
 		if (data.motto)
 			$('#memberMotto').html('"'+data.motto+'"').show();
 		
-		var actionList = $('#actionList');
-		var hasAction = false;
-		
-		var actions = sortActions(data.contacts)
-		
-		for (var i=0; i<actions.length; i++) {
-			actionList.append(createAction(actions[i].type, actions[i].value, hasAction));
-			hasAction = true;
-		}
-		
-		if (data.address) {
-			actionList.append(createAction('address', data.address.replace(/\n/g,' '), hasAction));
-			hasAction = true;
-		}
-		
-		if (hasAction)
-			$('#actionBlock').show();
+		processActions(data);
+		processLanguages(data.languages);
+		processInterests(data.interests);
 		
 		$('#pageBody').fadeIn(200);
 	}
+}
+
+function processInterests(interests){
+	if (!interests)
+		return;
+	
+	var hasInterests = false;
+	var list = $('#interestList');
+	
+	for (var i=0; i<interests.length; i++){
+		var interest = interests[i];
+		
+		var details = '';
+		
+		if (interest.skill)
+			details += interest.skill;
+		
+		if (interest.level) {
+			if (details)
+				details += ' ';
+			
+			details += interest.level;
+		}
+		
+		list.append(createListItem(interest.name, details, null, null, hasInterests));
+		hasInterests = true;
+	}
+	
+	if (hasInterests)
+		$('#interestBlock').show();
+}
+
+function processLanguages(languages){
+	if (!languages)
+		return;
+	
+	var hasLanguage = false;
+	var list = $('#languageList');
+	
+	for (var i=0; i<languages.length; i++){
+		var l = languages[i];
+		list.append(createListItem(l.name, l.level, null, null, hasLanguage, isFluent(l.level)));
+		hasLanguage = true;
+	}
+	
+	if (hasLanguage)
+		$('#languageBlock').show();
+}
+
+function isFluent(languageLevel){
+	return languageLevel == 'Maternelle' || languageLevel == 'Courant' || languageLevel == 'Expert'; 
+};
+
+function processActions(data){
+	var actionList = $('#actionList');
+	var hasAction = false;
+	
+	var actions = sortActions(data.contacts)
+	
+	for (var i=0; i<actions.length; i++) {
+		actionList.append(createAction(actions[i].type, actions[i].value, hasAction));
+		hasAction = true;
+	}
+	
+	if (data.address) {
+		actionList.append(createAction('address', data.address.replace(/\n/g,' '), hasAction));
+		hasAction = true;
+	}
+	
+	if (hasAction)
+		$('#actionBlock').show();
 }
 
 function sortActions(actionList){
@@ -137,6 +195,7 @@ function createAction(type, value, isSubseq){
 	<div id="memberDetails" class="dataBlock">
 		<div id="memberNameBlock">
 			<span id="memberName"></span>
+			<span id="memberRegion"></span>
 			<span id="memberId"></span>
 		</div>
 		<div id="memberMotto" class="hidden"></div>
@@ -145,6 +204,16 @@ function createAction(type, value, isSubseq){
 	<div id="actionBlock" class="hidden">
 		<div class="listTitle">Actions</div>
 		<div id="actionList" class="list"></div>
+	</div>
+	
+	<div id="languageBlock" class="hidden">
+		<div class="listTitle">Langues</div>
+		<div id="languageList" class="list"></div>
+	</div>
+	
+	<div id="interestBlock" class="hidden">
+		<div class="listTitle">Intérêts</div>
+		<div id="interestList" class="list"></div>
 	</div>
 </div>
 </body>

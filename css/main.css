@@ -219,6 +219,6 @@ button {
 	margin-top: 10px;
 }
 
-#memberId {
+#memberId, #memberRegion {
 	color: #888888;
 }
