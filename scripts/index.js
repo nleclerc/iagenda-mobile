@@ -90,12 +90,7 @@ function addEvent(eventData){
 		first = true;		
 	}
 	
-	var eventDiv = $('<div class="listItem" onclick="openEvent('+eventData.id+')"></div>');
-	eventDiv.append('<div class="listItemTitle" id="evtTitle-'+eventData.id+'">'+eventData.title+'</div>');
-	eventDiv.append('<div class="listItemDetails" id="evtDetails-'+eventData.id+'">&nbsp;</div>');
-	
-	if (!first)
-		eventDiv.addClass('subseqListItem');
+	var eventDiv = createListItem(eventData.title, '&nbsp;', null, 'event.html?eventId='+eventData.id, !first, null, 'event', eventData.id);
 	
 	eventDiv.hide().appendTo(dateBlock).fadeIn(500);
 	queue.push(eventData.id);
@@ -126,7 +121,9 @@ function openEvent(eventId) {
 }
 
 function loadEventData(eventId, callback) {
-	$("#evtDetails-"+eventId).html('<img src="images/loading.gif">');
+	var itemDesc = $('#item-event-'+eventId+' '+'.listItemDetails');
+	itemDesc.html('<img src="images/loading.gif">');
+	
 	$.getJSON("services/getEventData.php", {"eventId":eventId}, function(data){
 		var details = "";
 		details += data.participants.length+" / ";
@@ -141,10 +138,10 @@ function loadEventData(eventId, callback) {
 		details += " - ";
 		details += data.author;
 		
-		$("#evtDetails-"+data.id).html(details);
+		itemDesc.html(details);
 
 		if (data.isParticipating)
-			$("#evtTitle-"+data.id).addClass("highlightedItem");
+			$('#item-event-'+eventId+' '+'.listItemTitle').addClass("highlightedItem");
 		
 		queueInProcess = false;
 

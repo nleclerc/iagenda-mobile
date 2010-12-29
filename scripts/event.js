@@ -68,28 +68,13 @@ function formatDescription(source) {
 	return result;
 }
 
-function getParticipantHtml(data, hightlight, subseq){
-	var styles = 'listItem';
-	
-	if (hightlight)
-		styles += ' highlightedItem';
-	
-	if (subseq)
-		styles += ' subseqListItem';
-	
-	var result = '';
-	result += '<a class="'+styles+'" onclick="jumpTo(\'member.html?memberId='+data.id+'\')">';
-	result += '<img src="images/person.png" class="listItemIcon" alt="Fiche membre">';
-	result += '<div class="listItemTitle iconLabel">'+data.name+'</div>';
-	result += '<div class="listItemDetails iconLabel">'+data.id;
+function getParticipantHtml(data, highlight, subseq){
+	var details = ''+data.id;
 	
 	if (data.email)
-		result += ' - '+data.email+'</div>';
+		details += ' - '+data.email;
 	
-	result += '</div>';
-	result += '</a>';
-	
-	return result;
+	return createListItem(data.name, details, 'person', 'member.html?memberId='+data.id, subseq, highlight);
 }
 
 function subscribe(){

@@ -92,11 +92,6 @@ function sortActions(actionList){
 }
 
 function createAction(type, value, isSubseq){
-	var result = $('<a class="listItem"></a>');
-	
-	if (isSubseq)
-		result.addClass('subseqListItem');
-	
 	var message = 'Contacter';
 	var link = null;
 	
@@ -120,14 +115,7 @@ function createAction(type, value, isSubseq){
 			link = 'http://'+value;
 	}
 	
-	result.append('<img src="images/action-'+type+'.png" class="listItemIcon">');
-	result.append('<div class="listItemTitle iconLabel">'+message+'</div>');
-	result.append('<div class="listItemDetails iconLabel">'+value+'</div>');
-	
-	if (link)
-		result.attr('href', link);
-	
-	return result;
+	return createListItem(message, value, 'action-'+type, link, isSubseq);
 }
 
 </script>

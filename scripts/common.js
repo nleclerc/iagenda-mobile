@@ -1,4 +1,32 @@
 
+function createListItem(title, details, icon, link, isSubseq, isHighlighted, listName, itemId){
+	var item = $('<a class="listItem"></a>');
+	
+	if (listName && itemId)
+		item.attr('id', 'item-'+listName+'-'+itemId);
+	
+	if (isHighlighted)
+		item.addClass('highlightedItem');
+	
+	if (isSubseq)
+		item.addClass('subseqListItem');
+	
+	if (link) {
+		if (link.indexOf(':') > 0)
+			item.attr('href', link);
+		else
+			item.click(function(){jumpTo(link);});
+	}
+	
+	if (icon)
+		$('<img src="images/'+icon+'.png" class="listItemIcon">').appendTo(item);
+	
+	var title = $('<div class="listItemTitle">'+title+'</div>').appendTo(item);
+	var details = $('<div class="listItemDetails">'+details+'</div>').appendTo(item);
+	
+	return item;
+}
+
 function jumpTo(url){
 	window.location.href=url;
 }
