@@ -21,8 +21,8 @@ function createListItem(title, details, icon, link, isSubseq, isHighlighted, lis
 	if (icon)
 		$('<img src="images/'+icon+'.png" class="listItemIcon">').appendTo(item);
 	
-	var title = $('<div class="listItemTitle">'+title+'</div>').appendTo(item);
-	var details = $('<div class="listItemDetails">'+details+'</div>').appendTo(item);
+	var title = $('<div class="listItemTitle lineBlock">'+title+'</div>').appendTo(item);
+	var details = $('<div class="listItemDetails lineBlock">'+details+'</div>').appendTo(item);
 	
 	return item;
 }

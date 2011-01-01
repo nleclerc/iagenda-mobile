@@ -42,7 +42,7 @@ if ($receivedLogin) {
 
 <div id="header">
 <img id="headerLogo" alt="iAgenda" src="images/calendar.png">
-<div id="headerTitle">iAgenda Mobile</div>
+<div id="headerTitle" class="lineBlock">iAgenda Mobile</div>
 </div>
 
 <form action="#" method="post">
