@@ -1,6 +1,6 @@
 
 function createListItem(title, details, icon, link, isSubseq, isHighlighted, listName, itemId){
-	var item = $('<a class="listItem"></a>');
+	var item = $('<a class="listItem listItemForcedHeight"></a>');
 	
 	if (listName && itemId)
 		item.attr('id', 'item-'+listName+'-'+itemId);
@@ -21,8 +21,49 @@ function createListItem(title, details, icon, link, isSubseq, isHighlighted, lis
 	if (icon)
 		$('<img src="images/'+icon+'.png" class="listItemIcon">').appendTo(item);
 	
-	var title = $('<div class="listItemTitle lineBlock">'+title+'</div>').appendTo(item);
-	var details = $('<div class="listItemDetails lineBlock">'+details+'</div>').appendTo(item);
+	var titleDiv = $('<span class="listItemTitle lineBlock">'+title+'</span>').appendTo(item);
+	var detailsDiv = $('<span class="listItemDetails lineBlock">'+details+'</span>').appendTo(item);
+	
+	item.titleNode = titleDiv;
+	item.detailNode = detailsDiv;
+	
+	item.highlight = function(flag) {
+		var doSet = true;
+		
+		if (typeof(flag) == 'boolean')
+			doSet = flag;
+		
+		if (doSet)
+			this.titleNode.addClass('highlightedItem');
+		else
+			this.titleNode.removeClass('highlightedItem');
+		return this
+	};
+	
+	item.setFirst = function(flag) {
+		var doSet = true;
+		
+		if (typeof(flag) == 'boolean')
+			doSet = flag;
+		
+		if (doSet)
+			this.removeClass('subseqListItem');
+		else
+			this.addClass('subseqListItem');
+		return this;
+	};
+	
+	item.setSubsequent = function() {this.setFirst(false);return this};
+	
+	item.setSingleLine = function() {
+		this.removeClass('listItemForcedHeight');
+		this.titleNode.removeClass('lineBlock');
+		this.detailNode.removeClass('lineBlock');
+		this.detailNode.addClass('leftGap');
+		return this;
+	}
+	
+	item.setId = function(newId){this.attr('id', newId);return this};
 	
 	return item;
 }

@@ -53,7 +53,14 @@ img{
 	display: block;
 	text-decoration: none;
 	color: black;
+}
+
+.listItemForcedHeight {
 	height: 35px;
+}
+
+.leftGap {
+	margin-left: 5px;
 }
 
 .highlightedItem {

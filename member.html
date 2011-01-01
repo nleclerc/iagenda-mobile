@@ -72,12 +72,16 @@ function processInterests(interests){
 			details += interest.level;
 		}
 		
-		list.append(createListItem(interest.name, details, null, null, hasInterests));
+		list.append(createListItem(interest.name, details).setFirst(!hasInterests).highlight(isInterestReference(interest.skill)));
 		hasInterests = true;
 	}
 	
 	if (hasInterests)
 		$('#interestBlock').show();
+}
+
+function isInterestReference(skill){
+	return skill == 'Professionnel' || skill == 'Expert';
 }
 
 function processLanguages(languages){
@@ -89,7 +93,7 @@ function processLanguages(languages){
 	
 	for (var i=0; i<languages.length; i++){
 		var l = languages[i];
-		list.append(createListItem(l.name, l.level, null, null, hasLanguage, isFluent(l.level)));
+		list.append(createListItem(l.name, l.level, null, null, hasLanguage, isFluent(l.level)).setSingleLine());
 		hasLanguage = true;
 	}
 	

@@ -90,7 +90,10 @@ function addEvent(eventData){
 		first = true;		
 	}
 	
-	var eventDiv = createListItem(eventData.title, '&nbsp;', null, 'event.html?eventId='+eventData.id, !first, null, 'event', eventData.id);
+	var eventDiv = createListItem(eventData.title, '&nbsp;', null, 'event.html?eventId='+eventData.id);
+	
+	eventDiv.setFirst(first);
+	eventDiv.setId('item-event-'+eventData.id)
 	
 	eventDiv.hide().appendTo(dateBlock).fadeIn(500);
 	queue.push(eventData.id);
