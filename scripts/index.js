@@ -21,7 +21,8 @@ function resetLoadStatus(){
 }
 
 function isBottom(){
-	return (window.pageYOffset+$(window).height()) >= ($(document).height());
+	// compares to docheight-1 because of dezsire Z browser bug.
+	return ($(window).height()+$(window).scrollTop()) >= ($(document).height()-1);
 }
 
 function checkScrollToBottom(){
@@ -47,6 +48,8 @@ function loadNextEvents(){
 }
 
 function handleNewEvents(data){
+	eventLoading = false;
+	
 	if (!data.loggedIn) {
 		window.location.href = "login.php";
 		return;
@@ -71,7 +74,6 @@ function handleNewEvents(data){
 				if (!isBefore(data.events[i].date, currentDate))
 					addEvent(data.events[i]);
 			
-			eventLoading = false;
 			resetLoadStatus();
 		}
 		
