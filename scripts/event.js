@@ -54,16 +54,20 @@ function formatDescription(source) {
 //	result = result.replace(/(ATTENTION)/g, '<span class="highlight">$1</span>');
 //	result = result.replace(/(NOTE)/g, '<span class="highlight">$1</span>');
 	
+	// replace phone numbers with tel: links.
 	result = result.replace(/((0\d)[.\- ]?(\d\d)[.\- ]?(\d\d)[.\- ]?(\d\d)[.\- ]?(\d\d))/g, '<a href="tel:$2$3$4$5$6">$1</a>');
 	
-	result = result.replace(/(https?:\/\/\S+)/g, '<a href="$1">$1</a>');
-	result = result.replace(/([^:\/])(www.\S+)/g, '$1<a href="http://$2">$2</a>');
+	// replace full url (including 
+	result = result.replace(/((https?|ftp):\/\/\S+)/gim, '<a href="$1">$1</a>');
 	
-	result = result.replace(/(ftp:\/\/\S+)/g, '<a href="$1">$1</a>');
+	// replace url without protocol part.
+	result = result.replace(/([^:\/>]|^)(www.\S+)/gim, '$1<a href="http://$2">$2</a>');
+	
+	// replace email address with mailto link.
 	result = result.replace(/([A-Za-z0-9.\+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]+)/g, '<a href="mailto:$1">$1</a>');
 	
 	// location hack using custom tag in html.
-	result = result.replace(/<lieu>(.+?)<\/lieu>/g, '<a href="http://maps.google.fr/maps?q=$1">$1</a>');
+	result = result.replace(/<lieu>(.+?)<\/lieu>/gim, '<a href="http://maps.google.fr/maps?q=$1">$1</a>');
 
 	return result;
 }
