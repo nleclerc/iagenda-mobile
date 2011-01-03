@@ -7,14 +7,39 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 <script type="text/javascript" src="../scripts/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../scripts/event.js"></script>
+
+<style type="text/css">
+
+body, html{
+	font-family: sans-serif;
+	background-color: orange;
+}
+
+#sourceArea{
+	display: block;
+	height: 150px;
+	width: 100%;
+	
+	white-space: normal;
+}
+
+#result{
+	min-height: 150px;
+	width: 100%;
+	
+	border: solid 1px black;
+	opacity: 0.8;
+	background-color: white;
+}
+</style>
 
 <script type="text/javascript">
 
-$(init);
+$(update);
 
-function init(){
-	var result = "toto tutu tata".match(/tu(tu)/g);
-	$('#result').html(""+result);
+function update(){
+	$('#result').html(formatDescription($('#sourceArea').val()));
 }
 
 </script>
@@ -24,7 +49,13 @@ function init(){
 </head>
 <body>
 
-<div><h1>result</h1></div>
+<h1>Regex test</h1>
+
+<textarea id="sourceArea">
+Lorem ipsum ftp://ftp.a.com dolor sit 14h amet, http://a.com/toto consectetur 19h45 www.bob.com adipiscing elit. Pellentesque https://yo.com mailto:toto@t.com congue tata@p-et-p.com pulvinar 06 12 34 45 67 porttitor. ftp.a.fr Suspendisse <lieu>Place de la république, Paris</lieu> vulputate, orci (http://www.charliebirdy.com) ac bibendum fermentum, ipsum risus ornare enim, vitae auctor odio enim non mi. Curabitur eleifend imperdiet dapibus. Nam condimentum sagittis erat. Mauris condimentum pulvinar consequat. Sed ultricies varius laoreet. Vestibulum et magna placerat lorem tempus convallis accumsan quis tortor. Aenean ultricies massa sem, id sagittis odio. Fusce auctor rutrum ligula nec scelerisque. Cras vitae odio ipsum, sit amet interdum justo. </textarea>
+<button id="updateButton" onclick="update()">Update</button>
+
+<h1>Result</h1>
 <div id="result"></div>
 </body>
 </html>
