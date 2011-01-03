@@ -54,13 +54,12 @@ function formatDescription(source) {
 //	result = result.replace(/(ATTENTION)/g, '<span class="highlight">$1</span>');
 //	result = result.replace(/(NOTE)/g, '<span class="highlight">$1</span>');
 	
-	// replace phone number with tel: link.
 	result = result.replace(/((0\d)[.\- ]?(\d\d)[.\- ]?(\d\d)[.\- ]?(\d\d)[.\- ]?(\d\d))/g, '<a href="tel:$2$3$4$5$6">$1</a>');
 	
-	// replace url with actual link.
-	result = result.replace(/(((https?|ftp):\/\/|www.|ftp.)\S+)/g, '<a href="$1">$1</a>');
+	result = result.replace(/(https?:\/\/\S+)/g, '<a href="$1">$1</a>');
+	result = result.replace(/([^:\/])(www.\S+)/g, '$1<a href="http://$2">$2</a>');
 	
-	// replace emails with mailto links.
+	result = result.replace(/(ftp:\/\/\S+)/g, '<a href="$1">$1</a>');
 	result = result.replace(/([A-Za-z0-9.\+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]+)/g, '<a href="mailto:$1">$1</a>');
 	
 	// location hack using custom tag in html.
