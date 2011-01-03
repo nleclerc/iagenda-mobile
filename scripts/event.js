@@ -50,6 +50,10 @@ function handleData(data) {
 function formatDescription(source) {
 	var result = source;
 	
+	// workaround to prevent br tags to mess with url parsing (add spaces before and after).
+	result = result.replace(/\s*<br\s*\/?>\s*/gim, ' <br /> \n');
+	
+	// highlight hour literals.
 	result = result.replace(/(\d?\d[hH]\d{0,2})/g, '<span class="highlight">$1</span>');
 //	result = result.replace(/(ATTENTION)/g, '<span class="highlight">$1</span>');
 //	result = result.replace(/(NOTE)/g, '<span class="highlight">$1</span>');
