@@ -64,7 +64,7 @@ function formatDescription(source) {
 	result = result.replace(/([^:\/>]|^)(www.\S+)/gim, '$1<a href="http://$2">$2</a>');
 	
 	// replace email address with mailto link.
-	result = result.replace(/([A-Za-z0-9.\+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]+)/g, '<a href="mailto:$1">$1</a>');
+	result = result.replace(/([a-z0-9.\+\-]+@[a-z0-9.\-]+\.[a-z]+)/gim, '<a href="mailto:$1">$1</a>');
 	
 	// location hack using custom tag in html.
 	result = result.replace(/<lieu>(.+?)<\/lieu>/gim, '<a href="http://maps.google.fr/maps?q=$1">$1</a>');
