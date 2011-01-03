@@ -57,11 +57,13 @@ function formatDescription(source) {
 	// replace phone numbers with tel: links.
 	result = result.replace(/((0\d)[.\- ]?(\d\d)[.\- ]?(\d\d)[.\- ]?(\d\d)[.\- ]?(\d\d))/g, '<a href="tel:$2$3$4$5$6">$1</a>');
 	
-	// replace full url (including 
-	result = result.replace(/((https?|ftp):\/\/\S+)/gim, '<a href="$1">$1</a>');
+	// replace full url (including protocol part) 
+	result = result.replace(/(\(\s*)((https?|ftp):\/\/[^\s<"\)]+)(\s*\))/gim, '$1<a href="$2">$2</a>$4'); // url between round brackets
+	result = result.replace(/(^|[^>"])((https?|ftp):\/\/[^\s<"]+)/gim, '$1<a href="$2">$2</a>');
 	
 	// replace url without protocol part.
-	result = result.replace(/([^:\/>]|^)(www.\S+)/gim, '$1<a href="http://$2">$2</a>');
+	result = result.replace(/(\(\s*)(www.[^\s<"\)]+)(\s*\))/gim, '$1<a href="http://$2">$2</a>$3'); // url between round brackets
+	result = result.replace(/(^|[^>":\/])(www.[^\s<"]+)/gim, '$1<a href="http://$2">$2</a>');
 	
 	// replace email address with mailto link.
 	result = result.replace(/([a-z0-9.\+\-]+@[a-z0-9.\-]+\.[a-z]+)/gim, '<a href="mailto:$1">$1</a>');
