@@ -40,11 +40,19 @@ function readFileContent($fileUrl) {
 	
 	$content = curl_exec($ch);
 	$content = preg_replace('/\s+/', ' ', $content); // Normalize spaces for regex convenience.
-	$content = preg_replace('/&nbsp;/', ' ', $content); // Replace special char with proper char.
+	$content = preg_replace('/&nbsp;/i', ' ', $content); // Replace special char with proper char.
 	
-	// TODO: fix some chars encoding (like euro sign or 'oe').
+	$content = utf8_encode($content);
 	
-	return utf8_encode($content);
+	// workarounds for charset pb.
+	// can't pinpoint the exact issue but could be that original site declares iso-8859-1.
+	$content = preg_replace('/\x{0080}/u', '&euro;', $content); // Fixes euro char.
+	$content = preg_replace('/\x{0092}/u', "'", $content); // Fixes some apostrophes.
+	$content = preg_replace('/\x{009c}/u', "&oelig;", $content); // Fixes oe char.
+	
+	// TODO: fix more chars encoding.
+	
+	return $content;
 }
 
 function getErrorMessage($pageContent) {
