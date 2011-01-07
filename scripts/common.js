@@ -1,4 +1,8 @@
 
+function isDefined(varname){
+	return typeof(varname) != "undefined";
+}
+
 function createListItem(title, details, icon, link, isSubseq, isHighlighted, listName, itemId){
 	var item = $('<a class="listItem listItemForcedHeight"></a>');
 	

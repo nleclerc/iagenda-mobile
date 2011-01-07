@@ -10,8 +10,10 @@ function showEventBody(){
 }
 
 function handleData(data) {
-	if (!data.loggedIn)
+	if (isDefined(data.loggedIn) && !data.loggedIn) {
 		window.location.href = "login.php";
+		return;
+	}
 	
 	if (data.errorMessage)
 		setErrorMessage(data.errorMessage);

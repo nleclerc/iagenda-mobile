@@ -1,6 +1,7 @@
 <?php
 
 $MAIN_URL = "http://www.mensa-idf.org/index.php";
+//$MAIN_URL = "http://localhost/error.php";
 $AGENDA_URL = "$MAIN_URL?action=iAgenda_iagenda";
 $EVENT_URL = "$MAIN_URL?action=iAgenda_iactivite";
 $DISCONNECT_URL = "$MAIN_URL?action=deconnection";
@@ -39,6 +40,13 @@ function readFileContent($fileUrl) {
 	curl_setopt($ch, CURLOPT_COOKIEFILE, $cookieFile);
 	
 	$content = curl_exec($ch);
+	$curlInfo = curl_getinfo($ch);
+	
+	if (curl_errno($ch))
+		throw new Exception(curl_error($ch));
+	else if (intval($curlInfo['http_code']) != 200)
+		throw new Exception('Le serveur distant a envoyé une erreur code '.$curlInfo['http_code']);
+	
 	$content = preg_replace('/\s+/', ' ', $content); // Normalize spaces for regex convenience.
 	$content = preg_replace('/&nbsp;/i', ' ', $content); // Replace special char with proper char.
 	

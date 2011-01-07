@@ -50,7 +50,7 @@ function loadNextEvents(){
 function handleNewEvents(data){
 	eventLoading = false;
 	
-	if (!data.loggedIn) {
+	if (isDefined(data.loggedIn) && !data.loggedIn) {
 		window.location.href = "login.php";
 		return;
 	}
@@ -131,17 +131,22 @@ function loadEventData(eventId, callback) {
 	
 	$.getJSON("services/getEventData.php", {"eventId":eventId}, function(data){
 		var details = "";
-		details += data.participants.length+" / ";
 		
-		if (data.maxParticipants > 0)
-			details += data.maxParticipants;
-		else if (data.maxParticipants < 0)
-			details += "illimité";
-		else
-			details += "inconnu (ERREUR)";
-		
-		details += " - ";
-		details += data.author;
+		if (data.errorMessage)
+			details += "Erreur : "+data.errorMessage;
+		else {
+			details += data.participants.length+" / ";
+			
+			if (data.maxParticipants > 0)
+				details += data.maxParticipants;
+			else if (data.maxParticipants < 0)
+				details += "illimité";
+			else
+				details += "inconnu (ERREUR)";
+			
+			details += " - ";
+			details += data.author;
+		}
 		
 		itemDesc.hide().html(details).fadeIn(200);
 

@@ -12,24 +12,28 @@ $result = array();
 if (!isset($_GET['eventId']))
 	$errorMessage = "Identifiant d'événement manquant (eventId).";
 else {
-	$eventId = $_GET['eventId'];
-	$eventDetailsContent = getEventDetailPage($eventId);
-	
-	$isLoggedIn = isLoggedIn($eventDetailsContent);
-	
-	if (!$isLoggedIn)
-		$errorMessage = "Vous n'êtes pas identifié.";
-	else {
-		$userId = getUserIdFromContent($eventDetailsContent);
-		$username = getUserNameFromContent($eventDetailsContent);
+	try {
+		$eventId = $_GET['eventId'];
+		$eventDetailsContent = getEventDetailPage($eventId);
 		
-		$result = createEventDetails($eventId, $eventDetailsContent);
-		$result["username"] = $username;
-		$result["userid"] = $userId;
-		$result["isParticipating"] = isParticipating($result, $userId);
+		$isLoggedIn = isLoggedIn($eventDetailsContent);
+		
+		if (!$isLoggedIn)
+			$errorMessage = "Vous n'êtes pas identifié.";
+		else {
+			$userId = getUserIdFromContent($eventDetailsContent);
+			$username = getUserNameFromContent($eventDetailsContent);
+			
+			$result = createEventDetails($eventId, $eventDetailsContent);
+			$result["username"] = $username;
+			$result["userid"] = $userId;
+			$result["isParticipating"] = isParticipating($result, $userId);
+		}
+		
+		$result["loggedIn"] = $isLoggedIn;
+	} catch (Exception $e) {
+		$errorMessage = $e->getMessage();
 	}
-	
-	$result["loggedIn"] = $isLoggedIn;
 }
 
 $result["errorMessage"] = $errorMessage;

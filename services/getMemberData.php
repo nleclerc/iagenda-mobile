@@ -12,26 +12,30 @@ $result = array();
 if (!isset($_GET['memberId']))
 	$errorMessage = "Identifiant de membre manquant (memberId).";
 else {
-	$memberId = $_GET['memberId'];
-	$content = getMemberDetailPage($memberId);
-	
-	$isLoggedIn = isLoggedIn($content);
-	
-	if (!$isLoggedIn)
-		$errorMessage = "Vous n'êtes pas identifié.";
-	else {
-		$username = getUserNameFromContent($content);
+	try {
+		$memberId = $_GET['memberId'];
+		$content = getMemberDetailPage($memberId);
 		
-		$member = createMemberDetails($content);
+		$isLoggedIn = isLoggedIn($content);
 		
-		if ($member) {
-			$result = $member;
-			$result["username"] = $username;
-		} else
-			$errorMessage = "Membre non trouvé : $memberId";
+		if (!$isLoggedIn)
+			$errorMessage = "Vous n'êtes pas identifié.";
+		else {
+			$username = getUserNameFromContent($content);
+			
+			$member = createMemberDetails($content);
+			
+			if ($member) {
+				$result = $member;
+				$result["username"] = $username;
+			} else
+				$errorMessage = "Membre non trouvé : $memberId";
+		}
+		
+		$result["loggedIn"] = $isLoggedIn;
+	} catch (Exception $e) {
+		$errorMessage = $e->getMessage();
 	}
-	
-	$result["loggedIn"] = $isLoggedIn;
 }
 
 $result["errorMessage"] = $errorMessage;

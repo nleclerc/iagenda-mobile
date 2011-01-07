@@ -19,27 +19,31 @@ else {
 	
 	$currentDate = getdate();
 	
-	$thisMonthAgendaContent = getAgendaPage($month, $year);
-
-	$isLoggedIn = isLoggedIn($thisMonthAgendaContent);
+	try {
+		$thisMonthAgendaContent = getAgendaPage($month, $year);
 	
-	if (!$isLoggedIn)
-		$errorMessage = "Vous n'êtes pas identifié.";
-	else {
-		$username = getUserNameFromContent($thisMonthAgendaContent);
+		$isLoggedIn = isLoggedIn($thisMonthAgendaContent);
 		
-		$events = parseEventist($thisMonthAgendaContent);
-		
-		$result = array(
-			"username" => $username,
-			"month" => $month,
-			"year" => $year,
-			"events" => $events
-		);
+		if (!$isLoggedIn)
+			$errorMessage = "Vous n'êtes pas identifié.";
+		else {
+			$username = getUserNameFromContent($thisMonthAgendaContent);
+			
+			$events = parseEventist($thisMonthAgendaContent);
+			
+			$result = array(
+				"username" => $username,
+				"month" => $month,
+				"year" => $year,
+				"events" => $events
+			);
+		}
+		$result["loggedIn"] = $isLoggedIn;
+	} catch (Exception $e) {
+		$errorMessage = $e->getMessage();
 	}
-	
-	$result["loggedIn"] = $isLoggedIn;
 }
+
 $result["errorMessage"] = $errorMessage;
 echo json_encode($result);
 ?>
