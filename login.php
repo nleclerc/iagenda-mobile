@@ -56,7 +56,7 @@ if ($receivedLogin) {
 <div class="inputLabel">Mot de passe</div>
 <input type="password" name="pwd" value="<?=$receivedPassword?>">
 
-<button id="loginSubmit" type="submit">Valider</button>
+<input id="loginSubmit" type="submit" value="Valider">
 </div>
 </form>
 

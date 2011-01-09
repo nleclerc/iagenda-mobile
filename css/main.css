@@ -177,7 +177,7 @@ img{
 	margin-top: 20px;
 }
 
-button {
+button, #loginSubmit {
 	font-size: large;
 }
 
