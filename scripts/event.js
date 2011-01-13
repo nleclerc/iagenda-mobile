@@ -55,8 +55,10 @@ function formatDescription(source) {
 	// workaround to prevent br tags to mess with url parsing (add spaces before and after).
 	result = result.replace(/\s*<br\s*\/?>\s*/gim, ' <br /> \n');
 	
-	// highlight hour literals.
-	result = result.replace(/(\d?\d[hH]\d{0,2})/g, '<span class="highlight">$1</span>');
+	// highlight some specific values.
+	result = result.replace(/(\d?\dh\d{0,2})/ig, '<span class="highlight">$1</span>'); // hours
+	result = result.replace(/(\d+[\.,]?\d*\s*(€|euros?))/ig, '<span class="highlight">$1</span>'); // price
+	result = result.replace(/(gratuite?s?)/ig, '<span class="highlight">$1</span>'); // price
 //	result = result.replace(/(ATTENTION)/g, '<span class="highlight">$1</span>');
 //	result = result.replace(/(NOTE)/g, '<span class="highlight">$1</span>');
 	
