@@ -16,10 +16,10 @@ function createListItem(title, details, icon, link, isSubseq, isHighlighted, lis
 		item.addClass('subseqListItem');
 	
 	if (link) {
-		if (link.indexOf(':') > 0)
-			item.attr('href', link);
-		else
-			item.click(function(){jumpTo(link);});
+		item.attr('href', link);
+		
+		if (link.indexOf(':') < 0)
+			item.click(function(){jumpTo(link);return false;});
 	}
 	
 	if (icon)
