@@ -57,6 +57,7 @@ function readFileContent($fileUrl) {
 	$content = preg_replace('/\x{0080}/u', '&euro;', $content); // Fixes euro char.
 	$content = preg_replace('/\x{0092}/u', "'", $content); // Fixes some apostrophes.
 	$content = preg_replace('/\x{009c}/u', "&oelig;", $content); // Fixes oe char.
+	$content = preg_replace('/\x{0096}/u', "–", $content); // Fixes long dash char.
 	$content = preg_replace('/\x{0093}|\x{0094}/u', '"', $content); // Fixes opening and closing double quotes.
 	
 	// TODO: fix more chars encoding.
