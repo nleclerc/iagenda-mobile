@@ -143,7 +143,7 @@ function sortActions(actionList){
 		return actionsOfType;
 	}
 	
-	var typeOrder = ['mobile', 'phone', 'email', 'website'];
+	var typeOrder = ['mobile', 'phone', 'workphone', 'email', 'website'];
 	var actions = actionList.concat();
 	var result = new Array();
 	
@@ -164,6 +164,9 @@ function createAction(type, value, isSubseq){
 		link = 'mailto:'+value;
 	} else if (type == "phone") {
 		message = "Appeler sur son fixe";
+		link = 'tel:'+value;
+	} else if (type == "workphone") {
+		message = "Appeler sur son lieu de travail";
 		link = 'tel:'+value;
 	} else if (type == "mobile") {
 		message = "Appeler sur son mobile";

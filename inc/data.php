@@ -134,7 +134,7 @@ function createInterest($matches){
 }
 
 function createContact($matches){
-	$type = 'Unknown';
+	$type = 'unknown';
 	$value = $matches[2];
 	
 	switch ($matches[1]) {
@@ -145,6 +145,10 @@ function createContact($matches){
 			
 		case 'Tél. fixe':
 			$type = 'phone';
+			break;
+			
+		case 'Tél. fixe pro':
+			$type = 'workphone';
 			break;
 			
 		case 'Tél. mobile':
