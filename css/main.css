@@ -126,7 +126,7 @@ img{
 	);
 	
 	
-	-webkit-box-shadow: 0 0 15px black;
+	-webkit-box-shadow: 0 0 15px black;footerLink
 	-moz-box-shadow: 0 0 15px black;
 
 	color: white;
@@ -168,7 +168,7 @@ img{
 #eventDetailsDesc a {
 	color: #a12700;
 }
-
+4e1300
 #eventDetailsDesc a:visited {
 	color: #4e1300;
 }
@@ -221,4 +221,15 @@ button, #loginSubmit {
 
 #memberId, #memberRegion {
 	color: #888888;
+}
+
+.footerLink, .footerLink:visited{
+	display: block;
+	margin-top: 20px;
+	font-style: italic;
+	color: #81574a;
+}
+
+.qrcode{
+	margin-top: 20px;
 }
