@@ -38,7 +38,7 @@ Le site nécessite la lib PHP cURL pour fonctionner. Veuillez donc penser à l'i
 4. Contact
 ----------
 
-Pour toute question, merci de de me contacter vie email : nl@spirotron.fr
+Pour toute question, merci de de me contacter via email : nl@spirotron.fr
 
 ==========================
 EOF
