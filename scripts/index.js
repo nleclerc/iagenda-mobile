@@ -95,7 +95,7 @@ function addEvent(eventData){
 	var eventDiv = createListItem(eventData.title, '', null, 'event.html?eventId='+eventData.id);
 	
 	eventDiv.setFirst(first);
-	eventDiv.setId('item-event-'+eventData.id)
+	eventDiv.setId('item-event-'+eventData.id);
 	
 	eventDiv.hide().appendTo(dateBlock).fadeIn(500);
 	queue.push(eventData.id);
@@ -110,7 +110,7 @@ function createDateBlock(date){
 	events.append('<div class="listDate">'+beautifyDate(date, currentDate)+'</div>\n');
 	dateBlock.hide().appendTo(events).fadeIn(500);
 	
-	return dateBlock
+	return dateBlock;
 }
 
 function processQueue(){

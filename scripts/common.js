@@ -41,7 +41,7 @@ function createListItem(title, details, icon, link, isSubseq, isHighlighted, lis
 			this.titleNode.addClass('highlightedItem');
 		else
 			this.titleNode.removeClass('highlightedItem');
-		return this
+		return this;
 	};
 	
 	item.setFirst = function(flag) {
@@ -57,7 +57,7 @@ function createListItem(title, details, icon, link, isSubseq, isHighlighted, lis
 		return this;
 	};
 	
-	item.setSubsequent = function() {this.setFirst(false);return this};
+	item.setSubsequent = function() {this.setFirst(false);return this;};
 	
 	item.setSingleLine = function() {
 		this.removeClass('listItemForcedHeight');
@@ -65,9 +65,9 @@ function createListItem(title, details, icon, link, isSubseq, isHighlighted, lis
 		this.detailNode.removeClass('lineBlock');
 		this.detailNode.addClass('leftGap');
 		return this;
-	}
+	};
 	
-	item.setId = function(newId){this.attr('id', newId);return this};
+	item.setId = function(newId){this.attr('id', newId);return this;};
 	
 	return item;
 }
@@ -77,7 +77,7 @@ function jumpTo(url){
 }
 
 function getCurrentDate(){
-	return formatDate(new Date())
+	return formatDate(new Date());
 }
 
 function getDoubleDigit(number){
@@ -128,7 +128,7 @@ function getWeekDay(datestr){
 }
 
 function beautifyDate(date, referenceDate){
-	var result = date+' : '+getWeekDay(date)
+	var result = date+' : '+getWeekDay(date);
 	
 	if (referenceDate == date)
 		result = "Aujourd'hui, "+result;;

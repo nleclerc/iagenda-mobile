@@ -43,7 +43,7 @@ function handleData(data) {
 	
 	for (var i=0; i<data.participants.length; i++) {
 		var p = data.participants[i];
-		$('#participants').append(getParticipantHtml(p, data.userid==p.id, i>0))
+		$('#participants').append(getParticipantHtml(p, data.userid==p.id, i>0));
 	}
 	
 	showEventBody();
@@ -92,9 +92,9 @@ function getParticipantHtml(data, highlight, subseq){
 }
 
 function subscribe(){
-	loadAndRefresh("services/subscribe.php", {userId: userId, eventId: eventId})
+	loadAndRefresh("services/subscribe.php", {userId: userId, eventId: eventId});
 }
 
 function unsubscribe(){
-	loadAndRefresh("services/unsubscribe.php", {userId: userId, eventId: eventId})
+	loadAndRefresh("services/unsubscribe.php", {userId: userId, eventId: eventId});
 }
