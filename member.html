@@ -54,9 +54,63 @@ function handleData(data){
 	}
 }
 
+function sortInterests(interests){
+	
+	function sortLevel(interests){
+		const levels = ['Passionné','Intéressé','Curieux'];
+		levels.reverse();
+		
+		const source = interests.concat();
+		var result = new Array();
+		
+		for (var v=0; v<levels.length; v++){
+			var currentLevel = levels[v];
+			
+			for (var i=source.length-1; i>=0; i--){ 
+				// iterate down because of items removed in array
+				
+				if (source[i].level == currentLevel)
+					result.unshift(source.splice(i, 1)[0]);
+			}
+		}
+		
+		// add interests with skills not in list.
+		result = result.concat(source);
+		
+		return result;
+	}
+	
+	const skills = ['Professionnel','Expert','Éclairé','Débutant'];
+	skills.reverse();
+	
+	const source = interests.concat();
+	var result = new Array();
+	
+	for (var s=0; s<skills.length; s++){
+		var currentItems = new Array();
+		var currentSkill = skills[s];
+		
+		for (var i=source.length-1; i>=0; i--){ 
+			// iterate down because of items removed in array
+			
+			if (source[i].skill == currentSkill)
+				currentItems.unshift(source.splice(i, 1)[0]);
+		}
+		
+		result = sortLevel(currentItems).concat(result);
+	}
+	
+	// add interests with skills not in list.
+	result = result.concat(source);
+	
+	return result;
+}
+
 function processInterests(interests){
 	if (!interests)
 		return;
+	
+	interests = sortInterests(interests);
 	
 	var hasInterests = false;
 	var list = $('#interestList');
