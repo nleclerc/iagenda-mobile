@@ -30,6 +30,8 @@ function handleData(data) {
 	
 	$('#headerTitle').html(data.username);
 	$('#eventDetailsTitle').html(data.title);
+	document.title = data.title+' ['+document.title+']';
+	
 	$('#eventDate').html(beautifyDate(data.date, getCurrentDate()));
 	
 	if (data.authorEmail)
