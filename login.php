@@ -77,6 +77,7 @@ function toggleQRCode(){
 
 <input id="loginSubmit" type="submit" value="Valider">
 
+<a class="footerLink" href="mailto:nl@spirotron.fr?subject=[iAgenda] Remarque">Contact</a>
 <a class="footerLink" href="https://github.com/nleclerc/iagenda-mobile">Code Source</a>
 <a class="footerLink" id="qrcodelink" href="#">QRCode</a>
 
