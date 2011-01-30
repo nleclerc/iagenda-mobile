@@ -16,7 +16,7 @@ function createEventDetails($id, $definition){
 	$participants = array();
 	$participantMatches = array();
 	
-	if (preg_match_all('%<td>(\d+?) - (<a href="mailto:(.+?)">)?(.+?)(</a>)?</td>%', $data[7], $participantMatches))
+	if (preg_match_all('%<td>(\d+?) - (<a href="mailto:(.+?)">)?(.+?)(</a>)?( - .*?)?</td>%', $data[7], $participantMatches))
 		for ($i=0; $i<count($participantMatches[0]); $i++)
 			array_push($participants, createParticipant($participantMatches[1][$i], $participantMatches[4][$i], $participantMatches[3][$i]));
 	
