@@ -11,14 +11,14 @@ function createEventEntry($id, $title, $date){
 }
 
 function createEventDetails($id, $definition){
-	$data = rmatch('%<th.*?>(.*?)</th>.*?Activit&eacute; propos&eacute;e par (.+?)</td>.*?mailto:(.+?)".*?<b>(.*?)</b>.*?<b>(.*?)</b>.*?<td>(.*?)</td>%', $definition);
+	$data = rmatch('%<th.*?>(.*?)</th>.*?Activit&eacute; propos&eacute;e par (.+?)</td>.*?mailto:(.+?)".*?<b>(.*?)</b>.*?<b>(.*?)</b>.*?<td>(.*?)</td>.*?<th>Les inscrits.*?</tr>(.*?)<form%', $definition);
 	
 	$participants = array();
 	$participantMatches = array();
 	
-	if (preg_match_all('%<td>(\d+?) - <a href="mailto:(.+?)">(.+?)</a>%', $definition, $participantMatches))
+	if (preg_match_all('%<td>(\d+?) - (<a href="mailto:(.+?)">)?(.+?)(</a>)?</td>%', $data[7], $participantMatches))
 		for ($i=0; $i<count($participantMatches[0]); $i++)
-			array_push($participants, createParticipant($participantMatches[1][$i], $participantMatches[3][$i], $participantMatches[2][$i]));
+			array_push($participants, createParticipant($participantMatches[1][$i], $participantMatches[4][$i], $participantMatches[3][$i]));
 	
 	return array(
 		'id' => intval($id),
