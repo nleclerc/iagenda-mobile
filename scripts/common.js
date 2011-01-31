@@ -17,6 +17,7 @@ function createListItem(title, details, icon, link, isSubseq, isHighlighted, lis
 	
 	if (link) {
 		item.attr('href', link);
+		item.addClass('handPointer'); // fix for missing hand pointer in internet explorer.
 		
 		if (link.indexOf(':') < 0)
 			item.click(function(){jumpTo(link);return false;});
