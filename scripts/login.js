@@ -32,7 +32,7 @@ function showLoginForm(){
 }
 
 function handleLoginSubmit(eventObject){
-	$.getJSON("services/login.php?login="+$('#login').val()+"&pwd="+$('#pwd').val(), null, handleLoginresult);
+	$.getJSON("services/login.php", {login: $('#login').val(), pwd: $('#pwd').val()}, handleLoginresult);
 }
 
 function handleLoginresult(data){
