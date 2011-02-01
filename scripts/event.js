@@ -28,7 +28,8 @@ function handleData(data) {
 	eventId = data.id;
 	userId = data.userid;
 	
-	$('#headerTitle').html(data.username);
+	setLoggedIn(data.username);
+	
 	$('#eventDetailsTitle').html(data.title);
 	document.title = data.title+' ['+document.title+']';
 	

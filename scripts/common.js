@@ -1,4 +1,9 @@
 
+function setLoggedIn(username){
+	$('#headerTitle').html(username);
+	$('#quitButton').show();
+}
+
 function isDefined(varname){
 	return typeof(varname) != "undefined";
 }

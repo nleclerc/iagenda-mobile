@@ -68,7 +68,7 @@ function handleNewEvents(data){
 		} else {
 			listingDate = addMonth(listingDate);
 			
-			$('#headerTitle').html(data.username);
+			setLoggedIn(data.username);
 			
 			for (var i=0; i<data.events.length; i++)
 				if (!isBefore(data.events[i].date, currentDate))

@@ -12,7 +12,7 @@ function handleData(data){
 		setErrorMessage(data.errorMessage);
 	
 	if (data.id) {
-		$('#headerTitle').html(data.username);
+		setLoggedIn(data.username);
 		
 		$('#memberName').html(data.name);
 		document.title = data.name+' ['+document.title+']';
