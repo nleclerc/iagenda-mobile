@@ -19,11 +19,7 @@
 <script type="text/javascript" src="scripts/login.js"></script>
 <script type="text/javascript">
 
-$(init);
-
-function init(){
-	$('#loginForm').submit(handleLoginSubmit);
-}
+$(showLoginForm);
 
 </script>
 
@@ -36,27 +32,7 @@ function init(){
 <div id="headerTitle" class="lineBlock">iAgenda Mobile</div>
 </div>
 
-<!-- This iframe and form action are used to allow browsers to save login information. -->
-<iframe name="dummyFrame" class="hidden" src="dummy.txt"></iframe>
-
-<form name="loginForm" id="loginForm" target="dummyFrame" action="dummy.txt">
-
-<div id="errorMessage"></div>
-
-<div class="inputLabel">Identifiant</div>
-<input type="text" id="login" name="login">
-
-<div class="inputLabel">Mot de passe</div>
-<input type="password" id="pwd" name="pwd">
-
-<input id="loginSubmit" type="submit" value="Valider">
-
-<a class="footerLink" href="mailto:nl@spirotron.fr?subject=[iAgenda] Remarque">Contact</a>
-<a class="footerLink" href="https://github.com/nleclerc/iagenda-mobile">Code Source</a>
-<a class="footerLink" id="qrcodelink" href="#" onclick="toggleQRCode()">QRCode</a>
-
-<div id="qrcode"></div>
-</form>
+<div id="contentBody"></div>
 
 </body>
 </html>
