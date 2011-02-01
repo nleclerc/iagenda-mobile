@@ -21,7 +21,7 @@ function showLoginForm(){
 
 	body += '<a class="footerLink" href="mailto:nl@spirotron.fr?subject=[iAgenda] Remarque">Contact</a>';
 	body += '<a class="footerLink" href="https://github.com/nleclerc/iagenda-mobile">Code Source</a>';
-	body += '<a class="footerLink" id="qrcodelink" href="#" onclick="toggleQRCode()">QRCode</a>';
+	body += '<a class="footerLink" id="qrcodelink" href="#" onclick="toggleQRCode();return false;">QRCode</a>';
 
 	body += '<div id="qrcode"></div>';
 	body += '</form>';
