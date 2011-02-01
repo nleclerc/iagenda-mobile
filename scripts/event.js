@@ -11,7 +11,7 @@ function showEventBody(){
 
 function handleData(data) {
 	if (isDefined(data.loggedIn) && !data.loggedIn) {
-		window.location.href = "login.php";
+		window.location.href = "login.html";
 		return;
 	}
 	

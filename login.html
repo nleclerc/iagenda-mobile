@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name='HandheldFriendly' content='True' />
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<link rel="apple-touch-icon" href="images/calendar-big.png" />
+
+<title>iAgenda Mobile</title>
+
+<link rel="shortcut icon" href="images/favicon.png">
+<link rel="stylesheet" href="css/main.css" type="text/css" />
+
+<script type="text/javascript" src="scripts/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="scripts/common.js"></script>
+<script type="text/javascript">
+
+$(init);
+
+function init(){
+	$('#loginForm').submit(handleSubmit);
+}
+
+function handleSubmit(eventObject){
+	$.getJSON("services/login.php?login="+$('#login').val()+"&pwd="+$('#pwd').val(), null, handleLoginresult);
+}
+
+function handleLoginresult(data){
+	if (data.errorMessage)
+		setErrorMessage(data.errorMessage);
+	else if (!data.loggedIn)
+		setErrorMessage("Erreur de login.");
+	else {
+//		$('#headerTitle').html(data.username);
+		jumpTo(".");
+	}
+}
+
+function toggleQRCode(){
+	var code = $('#qrcode');
+	if (code.html() == '')
+		code.html('<img class="qrcode" src="http://chart.apis.google.com/chart?cht=qr&chs=150x150&choe=UTF-8&chld=chld=L|1&chl='+window.location.href+'">');
+	else
+		code.html('');
+}
+
+</script>
+
+<script type="text/javascript" src="/ga.js"></script>
+</head>
+<body>
+
+<div id="header">
+<img id="headerLogo" alt="iAgenda" src="images/calendar.png">
+<div id="headerTitle" class="lineBlock">iAgenda Mobile</div>
+</div>
+
+<!-- This iframe and form action are used to allow browsers to save login information. -->
+<iframe name="dummyFrame" class="hidden" src="dummy.txt"></iframe>
+
+<form name="loginForm" id="loginForm" target="dummyFrame" action="dummy.txt">
+
+<div id="errorMessage"></div>
+
+<div class="inputLabel">Identifiant</div>
+<input type="text" id="login" name="login">
+
+<div class="inputLabel">Mot de passe</div>
+<input type="password" id="pwd" name="pwd">
+
+<input id="loginSubmit" type="submit" value="Valider">
+
+<a class="footerLink" href="mailto:nl@spirotron.fr?subject=[iAgenda] Remarque">Contact</a>
+<a class="footerLink" href="https://github.com/nleclerc/iagenda-mobile">Code Source</a>
+<a class="footerLink" id="qrcodelink" href="#" onclick="toggleQRCode()">QRCode</a>
+
+<div id="qrcode"></div>
+</form>
+
+</body>
+</html>

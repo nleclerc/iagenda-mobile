@@ -98,7 +98,7 @@ img{
 	color: white;
 	opacity: 0.5;
 	font-size: small;
-	padding: 2px;
+	padding: 2px;is
 	padding-top: 4px;
 }
 
@@ -228,7 +228,7 @@ button, #loginSubmit {
 }
 
 .footerLink, .footerLink:visited{
-	display: block;
+	display: table;
 	margin-top: 20px;
 	font-style: italic;
 	color: #81574a;
