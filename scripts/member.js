@@ -176,7 +176,7 @@ function sortActions(actionList){
 		return actionsOfType;
 	}
 	
-	var typeOrder = ['mobile', 'phone', 'workphone', 'email', 'website'];
+	var typeOrder = ['mobile', 'workmobile', 'phone', 'workphone', 'email', 'workemail', 'website', 'address'];
 	var actions = actionList.concat();
 	var result = new Array();
 	
@@ -189,20 +189,26 @@ function sortActions(actionList){
 }
 
 function createAction(type, value, isSubseq){
-	var message = 'Contacter';
+	var message = type;
 	var link = null;
 	
 	if (type == "email") {
 		message = "Envoyer un email";
 		link = 'mailto:'+value;
+	} else if (type == "work email") {
+		message = "Envoyer un email (professionnel)";
+		link = 'mailto:'+value;
 	} else if (type == "phone") {
 		message = "Appeler sur son fixe";
 		link = 'tel:'+value;
 	} else if (type == "workphone") {
-		message = "Appeler sur son lieu de travail";
+		message = "Appeler sur son fixe (professionnel)";
 		link = 'tel:'+value;
 	} else if (type == "mobile") {
 		message = "Appeler sur son mobile";
+		link = 'tel:'+value;
+	} else if (type == "workmobile") {
+		message = "Appeler sur son mobile (professionnel)";
 		link = 'tel:'+value;
 	} else if (type == "address") {
 		message = "Localiser";
